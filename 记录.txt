@@ -1,0 +1,56 @@
+2019年12月3日 17点57分  
+完成虚拟机的搭建、java的安装、nodejs的安装
+java的安装：https://www.cnblogs.com/shirley-0021/p/8510051.html
+	java -version
+	javac
+node:官网
+	node -version
+	npm -version
+office的安装
+	桌面文件夹
+2019年12月4日 09点55分
+IDEA的安装
+Chrome浏览器的安装
+VSCode的安装
+git的安装
+VSCode插件的安装
+2019年12月6日 10点38分
+MySQL的成功安装
+获取到了ant design pro的demo
+dva.js的学习
+	dva开发一个cnode网站
+	https://segmentfault.com/a/1190000017406900
+	dva官网
+	https://dvajs.com/
+	哔哩哔哩教学视频
+	https://www.bilibili.com/video/av55863089
+2019年12月12日 19点07分
+create-react-app的安装
+dva的安装
+
+2019年12月13日 16点30分
+react模块常用模块包
+	https://www.jianshu.com/p/99128a6892bb
+	react-helmet：管理对文档头的所有更改
+logo和名字的确认
+	https://www.logomaker.com.cn
+	teamail.svg
+	一茶一会：取自日本“一期一会”意义，修改了其中一个字。
+
+2019年12月15日 21点04分
+分析代码，下载安装Soucetree
+成功上传到github
+
+2019年12月16日 16点30分
+版权信息的修改
+	Defaultfooter 中link设置为空数组
+	<Defaultfooter links={[]} copyright="" />
+完成主界面路由的添加
+个人中心的页面的路由添加暂未成功
+
+
+
+
+
+	
+
