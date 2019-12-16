@@ -33,20 +33,21 @@ class WrapFormItem extends Component {
     clearInterval(this.interval);
   }
 
-  onGetCaptcha = () => {
-    const { onGetCaptcha } = this.props;
-    const result = onGetCaptcha ? onGetCaptcha() : null;
+  //  验证码相关
+  // onGetCaptcha = () => {
+  //   const { onGetCaptcha } = this.props;
+  //   const result = onGetCaptcha ? onGetCaptcha() : null;
 
-    if (result === false) {
-      return;
-    }
+  //   if (result === false) {
+  //     return;
+  //   }
 
-    if (result instanceof Promise) {
-      result.then(this.runGetCaptchaCountDown);
-    } else {
-      this.runGetCaptchaCountDown();
-    }
-  };
+  //   if (result instanceof Promise) {
+  //     result.then(this.runGetCaptchaCountDown);
+  //   } else {
+  //     this.runGetCaptchaCountDown();
+  //   }
+  // };
 
   getFormItemOptions = ({ onChange, defaultValue, customProps = {}, rules }) => {
     const options = {
@@ -64,23 +65,24 @@ class WrapFormItem extends Component {
     return options;
   };
 
-  runGetCaptchaCountDown = () => {
-    const { countDown } = this.props;
-    let count = countDown || 59;
-    this.setState({
-      count,
-    });
-    this.interval = window.setInterval(() => {
-      count -= 1;
-      this.setState({
-        count,
-      });
+  // 验证码倒计时
+  // runGetCaptchaCountDown = () => {
+  //   const { countDown } = this.props;
+  //   let count = countDown || 59;
+  //   this.setState({
+  //     count,
+  //   });
+  //   this.interval = window.setInterval(() => {
+  //     count -= 1;
+  //     this.setState({
+  //       count,
+  //     });
 
-      if (count === 0) {
-        clearInterval(this.interval);
-      }
-    }, 1000);
-  };
+  //     if (count === 0) {
+  //       clearInterval(this.interval);
+  //     }
+  //   }, 1000);
+  // };
 
   render() {
     const { count } = this.state; // 这么写是为了防止restProps中 带入 onChange, defaultValue, rules props tabUtil

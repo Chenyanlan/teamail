@@ -46,30 +46,31 @@ class Login extends Component {
     });
   };
 
-  onGetCaptcha = () =>
-    new Promise((resolve, reject) => {
-      if (!this.loginForm) {
-        return;
-      }
+  // 获取验证码
+  // onGetCaptcha = () =>
+  //   new Promise((resolve, reject) => {
+  //     if (!this.loginForm) {
+  //       return;
+  //     }
 
-      this.loginForm.validateFields(['mobile'], {}, async (err, values) => {
-        if (err) {
-          reject(err);
-        } else {
-          const { dispatch } = this.props;
+  //     this.loginForm.validateFields(['mobile'], {}, async (err, values) => {
+  //       if (err) {
+  //         reject(err);
+  //       } else {
+  //         const { dispatch } = this.props;
 
-          try {
-            const success = await dispatch({
-              type: 'login/getCaptcha',
-              payload: values.mobile,
-            });
-            resolve(!!success);
-          } catch (error) {
-            reject(error);
-          }
-        }
-      });
-    });
+  //         try {
+  //           const success = await dispatch({
+  //             type: 'login/getCaptcha',
+  //             payload: values.mobile,
+  //           });
+  //           resolve(!!success);
+  //         } catch (error) {
+  //           reject(error);
+  //         }
+  //       }
+  //     });
+  //   });
 
   renderMessage = content => (
     <Alert

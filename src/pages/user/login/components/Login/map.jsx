@@ -2,7 +2,7 @@ import { Icon } from 'antd';
 import React from 'react';
 import styles from './index.less';
 
-// 登录的页面
+// 登录页面的表单规则
 export default {
   UserName: {
     props: {
