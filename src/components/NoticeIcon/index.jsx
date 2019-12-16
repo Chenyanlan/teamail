@@ -31,7 +31,6 @@ export default class NoticeIcon extends Component {
       onItemClick(item, tabProps);
     }
   };
-
   onClear = (name, key) => {
     const { onClear } = this.props;
 
@@ -39,7 +38,6 @@ export default class NoticeIcon extends Component {
       onClear(name, key);
     }
   };
-
   onTabChange = tabType => {
     const { onTabChange } = this.props;
 
@@ -47,7 +45,6 @@ export default class NoticeIcon extends Component {
       onTabChange(tabType);
     }
   };
-
   onViewMore = (tabProps, event) => {
     const { onViewMore } = this.props;
 
