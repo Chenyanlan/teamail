@@ -7,7 +7,7 @@ import HeaderSearch from '../HeaderSearch';
 import styles from './index.less';
 
 const GlobalHeaderRight = props => {
-  console.log(props);
+  // console.log(props);
   const { theme, layout } = props;
   let className = styles.right;
 

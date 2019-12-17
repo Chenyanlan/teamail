@@ -122,6 +122,24 @@ export default {
               component: './bbs/Bbs',
             },
             {
+              path: '/bbs/:id',
+              name: 'bbsdetail',
+              hideInMenu:true,
+              component: './bbs/BbsDetail',
+            },
+            {
+              path: '/account/center/:id',
+              name: 'account.center',
+              hideInMenu:true,
+              component: './account/center/AccountCenter',
+            },
+            {
+              path: '/account/settings/:id',
+              name: 'account.center',
+              hideInMenu:true,
+              component: './account/setting/AccountSetting',
+            },
+            {
               path: '/admin',
               name: 'admin',
               icon: 'crown',

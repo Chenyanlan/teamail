@@ -3,6 +3,7 @@ export default {
   'menu.bbs': '博客',
   'menu.mall': '商城',
   'menu.wiki': '百科',
+  'menu.bbsdetail': '博客详情',
   'menu.more-blocks': '更多区块',
   'menu.home': '首页',
   'menu.admin': '管理页',

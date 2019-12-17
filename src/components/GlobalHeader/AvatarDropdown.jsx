@@ -8,8 +8,9 @@ import styles from './index.less';
 
 class AvatarDropdown extends React.Component {
   onMenuClick = event => {
+    console.log(event);
     const { key } = event;
-
+    const id = 1;
     if (key === 'logout') {
       const { dispatch } = this.props;
 
@@ -22,11 +23,11 @@ class AvatarDropdown extends React.Component {
       return;
     }
 
-    router.push(`/account/${key}`);
+    router.push(`/account/${key}/${id}`);
   };
 
   render() {
-    console.log(this.props);
+    // console.log(this.props);
     const {
       currentUser = {
         avatar: '',
@@ -48,7 +49,7 @@ class AvatarDropdown extends React.Component {
           <FormattedMessage id="menu.account.settings" defaultMessage="account settings" />
         </Menu.Item>
         {/* )} */}
-        {menu && <Menu.Divider />}
+        {/* {menu && <Menu.Divider />} */}
 
         <Menu.Item key="logout">
           <Icon type="logout" />
