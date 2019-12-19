@@ -1,12 +1,12 @@
 const titles = [
-    'Alipay',
-    'Angular',
-    'Ant Design',
-    'Ant Design Pro',
-    'Bootstrap',
-    'React',
-    'Vue',
-    'Webpack',
+    '红茶',
+    '绿茶',
+    '黑茶',
+    '黄茶',
+    '乌龙茶',
+    '白茶',
+    '中国十大名茶',
+    '龙井',
 ];
 const avatars = [
     'https://gw.alipayobjects.com/zos/rmsportal/WdGqmHpayyMjiEhcKoVE.png', // Alipay
@@ -101,9 +101,9 @@ function getFakeList(req, res) {
 export default {
     'GET /api/fake_list':getFakeList,
     'GET /api/currentUser':{
-        name:'yanlan chen',
+        name:'yanlan Chen',
         avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
-        userid:1,
+        userid: '00000001',
         email:'31501391@stu.zucc.edu.cn',
         // 签名
         signature:'我只是一个DD',
