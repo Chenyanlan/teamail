@@ -107,7 +107,7 @@ export default {
               path: '/wiki',
               name: 'wiki',
               icon: 'book',
-              component: './Welcome',
+              component: './wiki/index',
             },
             {
               path: '/mall',
@@ -201,11 +201,11 @@ export default {
   manifest: {
     basePath: '/',
   }, // chainWebpack: webpackPlugin,
-  // proxy: {
-  //   '/server/api/': {
-  //     target: 'https://preview.pro.ant.design/',
-  //     changeOrigin: true,
-  //     pathRewrite: { '^/server': '' },
-  //   },
-  // },
+  proxy: {
+    '/api': {
+      target: 'http://rap2api.taobao.org/app/mock/228455',
+      changeOrigin: true,
+      pathRewrite: { '^/api': '/api' },
+    },
+  },
 };

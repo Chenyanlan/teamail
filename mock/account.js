@@ -32,16 +32,16 @@ const desc = [
     '那时候我只会想自己想要什么，从不想自己拥有什么',
 ];
 const user = [
-    '付小小',
-    '曲丽丽',
-    '林东东',
-    '周星星',
-    '吴加好',
-    '朱偏右',
-    '鱼酱',
-    '乐哥',
-    '谭小仪',
-    '仲尼',
+    'yanlan chen',
+    'nishino',
+    'nanase',
+    'hirate',
+    'yurina',
+    'shilaishi',
+    'mai',
+    'habu',
+    'mizuho',
+    'techi',
 ];
 function fakeList(count) {
     const list = [];
@@ -71,18 +71,18 @@ function fakeList(count) {
           '段落示意：蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。蚂蚁金服设计平台 ant.design，用最小的工作量，无缝接入蚂蚁金服生态，提供跨越设计与开发的体验解决方案。',
         members: [
           {
-            avatar: 'https://gw.alipayobjects.com/zos/rmsportal/ZiESqWwCXBRQoaPONSJe.png',
-            name: '曲丽丽',
+            avatar: '../src/assets/avatar2.jpg',
+            name: 'nishino',
             id: 'member1',
           },
           {
-            avatar: 'https://gw.alipayobjects.com/zos/rmsportal/tBOxZPlITHqwlGjsJWaF.png',
-            name: '王昭君',
+            avatar: '../src/assets/avatar1.jpeg',
+            name: 'nanase',
             id: 'member2',
           },
           {
-            avatar: 'https://gw.alipayobjects.com/zos/rmsportal/sBxjgqiuHMGRkIjqlQCd.png',
-            name: '董娜娜',
+            avatar: '../src/assets/avatar3.jpg',
+            name: 'mai',
             id: 'member3',
           },
         ],
@@ -101,7 +101,7 @@ function getFakeList(req, res) {
 export default {
     'GET /api/fake_list':getFakeList,
     'GET /api/currentUser':{
-        name:'yanlan Chen',
+        name:'yanlan chen',
         avatar: 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png',
         userid: '00000001',
         email:'31501391@stu.zucc.edu.cn',

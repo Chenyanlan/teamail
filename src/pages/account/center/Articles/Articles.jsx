@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { Icon, List, Tag } from 'antd';
 import {connect} from 'dva';
-import ArticleListContent from '../ArticleListContent';
+import ArticleListContent from '../../../../components/ArticleListContent';
 import styles from './Articles.less';
 
 @connect(({accountCenter})=>({
@@ -40,9 +40,9 @@ class Articles extends Component {
                             }
                             description={
                                 <span>
-                                    <Tag>Ant Design</Tag>
-                                    <Tag>设计语言</Tag>
-                                    <Tag>蚂蚁金服</Tag>
+                                    <Tag>绿茶</Tag>
+                                    <Tag>红茶</Tag>
+                                    <Tag>黑茶</Tag>
                                 </span>
                             }
                         />
