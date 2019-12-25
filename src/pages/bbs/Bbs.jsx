@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
-
-import { Button, Card, Col, Form, Icon, List, Row, Select, Tag } from 'antd';
+import { Button, Card, Col, Form, Icon, List, Row, Select, Tag,Typography ,Avatar } from 'antd';
 import router from 'umi/router';
 import { connect } from 'dva';
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import TagSelect from '../../components/TagSelect';
 import ArticleListContent from '../../components/ArticleListContent';
 import StandardFormRow from '../../components/StandardFormRow';
+import picture from '../../assets/picture.png';
+import touxiang from '../../assets/avatar7.jpg';
 import styles from './bbs.less';
 
+const { Title } = Typography;
 const { Option } = Select;
 const FormItem = Form.Item;
 const pageSize = 5;
@@ -80,6 +81,16 @@ class Bbs extends Component {
       </span>
     );
 
+    const listData = [];
+    for (let i = 0; i < 3; i++) {
+      listData.push({
+        href: 'http://ant.design',
+        title: `茶咨询 ${i}`,
+        avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
+        content:
+          '近日，艾媒咨询发布的《2019-2021全球茶叶产业运行大数据与中国茶业创新发展趋势研究报告》(以下简称"报告")显示，2018年全球茶叶总产量为590.5万吨，其中，中国茶叶总产量为261.6万吨(44.7%)。',
+      });
+    }
     const formItemLayout = {
       wrapperCol: {
         xs: {
@@ -119,11 +130,15 @@ class Bbs extends Component {
     );
 
     return (
-      <PageHeaderWrapper>
-        <Card bordered={false}>
+      <>
+        <div className={styles.background}>
+          <Title>论坛</Title>
+          <Title level={2}>了解中国茶的点点滴滴......</Title> 
+        </div>
+         {/* <Card bordered={false}>
           <Form layout="inline">
             <StandardFormRow
-              title="所属类目"
+              title="标签"
               block
               style={{
                 paddingBottom: 11,
@@ -189,10 +204,62 @@ class Bbs extends Component {
               </Row>
             </StandardFormRow>
           </Form>
-        </Card>
+        </Card>  */}
         <Row gutter={24}>
-          <Col xl={18} lg={24} md={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
+          <Col xl={8} lg={24} md={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
+            <div className={styles.menu}>
+              <a>茶·传说</a> <span className={styles.arrow}><a>></a></span>
+            </div>
+            <div className={styles.menu}>
+              <a>茶·知识</a>  <span className={styles.arrow}><a>></a></span>
+            </div>
+            <div className={styles.menu}>
+              <a>茶·故事</a> <span className={styles.arrow}><a>></a></span>
+            </div>
             <Card
+              style={{
+                marginTop: 24,
+              }}
+              bordered={false}
+              >
+                <List
+                  itemLayout="vertical"
+                  size="middle"
+                  header={
+                    <Title level={4}>茶叶咨询</Title>
+                  }
+                  dataSource={listData}
+                  renderItem={item => (
+                    <List.Item
+                      key={item.title}
+                      // actions={[
+                      //   <IconText type="star-o" text="156" key="list-vertical-star-o" />,
+                      //   <IconText type="like-o" text="156" key="list-vertical-like-o" />,
+                      //   <IconText type="message" text="2" key="list-vertical-message" />,
+                      // ]}
+                      extra={
+                        <img
+                          width={272}
+                          alt="logo"
+                          src={picture}
+                        />
+                      }
+                    >
+                      <List.Item.Meta
+                        avatar={<Avatar src={touxiang}/>}
+                        title={<a href={item.href}>{item.title}</a>}
+                        // description={item.description}
+                      />
+                      {item.content}
+                    </List.Item>
+                  )}
+                />
+            </Card>
+                {/* </Card> */}
+          </Col>
+          <Col xl={16} lg={24} md={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
+            <Card
+              title="茶文化"
               style={{
                 marginTop: 24,
               }}
@@ -226,9 +293,9 @@ class Bbs extends Component {
                       }
                       description={
                         <span>
-                          <Tag>绿茶</Tag>
+                          <Tag>茶知识</Tag>
                           <Tag>茶文化</Tag>
-                          <Tag>小知识</Tag>
+                          <Tag>茶传说</Tag>
                         </span>
                       }
                     />
@@ -238,14 +305,10 @@ class Bbs extends Component {
               />
             </Card>
           </Col>
-          {/* <Col xl={6} lg={24} md={24} sm={24} xs={24}>
-            <Card>
-
-            </Card>
-          </Col> */}
+     
         </Row>
 
-      </PageHeaderWrapper>
+      </>
     );
   }
 }

@@ -16,8 +16,7 @@ const ArticleListContent = ({ data: { content, updatedAt, avatar, owner, href } 
     <div className={styles.description}>{content}</div>
     <div className={styles.extra}>
       <Avatar size="small" style={{ backgroundColor: '#87d068' }} icon="user" />
-      <a href={href}>{owner}</a> 发布在 <a href={href}>{href}</a>
-      <em>{moment(updatedAt).format('YYYY-MM-DD HH:mm')}</em>
+      <a href={href}>{owner}</a> 发布于 <em>{moment(updatedAt).format('YYYY-MM-DD HH:mm')}</em>
     </div>
   </div>
 );

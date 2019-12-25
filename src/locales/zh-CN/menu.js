@@ -1,9 +1,9 @@
 export default {
   'menu.welcome': '主页',
-  'menu.bbs': '茶 · 博客',
+  'menu.bbs': '茶 · 论坛',
   'menu.mall': '茶 · 商城',
   'menu.wiki': '茶 · 百科',
-  'menu.bbsdetail': '博客详情',
+  'menu.bbsdetail': '论坛详情',
   'menu.more-blocks': '更多区块',
   'menu.home': '首页',
   'menu.admin': '管理页',

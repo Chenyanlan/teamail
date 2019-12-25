@@ -18,7 +18,7 @@ export default {
   'app.wiki.menuMap.redTea':'红茶',
   'app.wiki.menuMap.blackTea':'黑茶',
   'app.wiki.menuMap.whiteTea':'白茶',
-  'app.wiki.menuMap.wulong':'乌龙茶',
+  'app.wiki.menuMap.wulong':'青茶',
   'app.wiki.menuMap.yellowTea':'黄茶',
   'app.wiki.menuMap.scentedTea':'花茶等其他',
   ...globalHeader,
