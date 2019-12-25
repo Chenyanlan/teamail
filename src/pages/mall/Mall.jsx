@@ -14,8 +14,6 @@ const FormItem = Form.Item;
 const pageSize = 5;
 const getKey = (id, index) => `${id}-${index}`;
 
-
-
 @Form.create()
 @connect(({ listSearchArticles, loading }) => ({
   listSearchArticles,

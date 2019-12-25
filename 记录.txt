@@ -55,6 +55,11 @@ logo和名字的确认
 
 2019年12月20日 14点22分
 基本完成个人中心，个人设置两个页面，博客首页
+2019年12月25日 21点39分
+安装
+yarn add bizcharts
+安装成功
+yarn add lodash.debounce
 
 
 

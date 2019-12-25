@@ -1,18 +1,23 @@
 import React from 'react';
-import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import { GridContent } from '@ant-design/pro-layout';
 import { FormattedMessage } from 'umi-plugin-react/locale';
-import { Carousel, Row, Col, Tabs, Icon, Card, List, Avatar, Typography, Menu,Divider } from 'antd';
+import { Carousel, Row, Col, Tabs, Icon, Card, List, Avatar, Typography, Menu, Divider } from 'antd';
+import TagCloud from '../components/TagCloud'
 import InfiniteScroll from 'react-infinite-scroller';
 import touxiang from '../assets/avatar2.jpg';
 import touxiang2 from '../assets/avatar3.jpg';
 import picture from '../assets/picture2.jfif';
+import square1 from '../assets/square1.png';
+import square2 from '../assets/square2.png';
+import square3 from '../assets/square3.png';
+
 import styles from './Welcome.less';
 
 const listData = [];
 for (let i = 0; i < 1; i++) {
   listData.push({
     href: 'http://ant.design',
-    title: `茶行业革命`,
+    title: '茶行业革命',
     avatar: 'https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png',
     description:
       '拿茶行业的销售来说，一个人干就是夫妻店生意，一群人干是销售部，全国各地都有人利益抱团一起干，就是全国市场深度分销。',
@@ -78,286 +83,396 @@ const { TabPane } = Tabs;
 const { Title } = Typography;
 const { SubMenu } = Menu;
 // 欢迎界面，用户登录主页面
+const tags = [
+  { name: '绿茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '红茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '白茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黄茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黑茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '青茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '花茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '茶具', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '紫砂陶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '竹制', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '绿茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '红茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '白茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黄茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黑茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '青茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '花茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '茶具', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '紫砂陶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '竹制', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '绿茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '红茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '白茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黄茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黑茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '青茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '花茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '茶具', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '紫砂陶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '竹制', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '绿茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '红茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '白茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黄茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黑茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '青茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '花茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '茶具', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '紫砂陶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '竹制', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '绿茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '红茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '白茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黄茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黑茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '青茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '花茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '茶具', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '紫砂陶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '竹制', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '绿茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '红茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '白茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黄茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黑茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '青茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '花茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '茶具', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '紫砂陶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '竹制', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '绿茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '红茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '白茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黄茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黑茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '青茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '花茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '茶具', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '紫砂陶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '竹制', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '绿茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '红茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '白茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黄茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '黑茶', value: Math.floor(Math.random() * 50) + 40 },
+  { name: '青茶', value: Math.floor(Math.random() * 50) + 40 },
+]
 export default () => (
-  <PageHeaderWrapper>
-    <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
-      <Col xs={4} sm={4} md={4} lg={4} xl={4}>
-        <Menu onClick={handleClick} className={styles.menu} mode="vertical">
-          <SubMenu
-            key="sub1"
-            title={
-              <span>
-                <Icon type="mail" />
-                <span>绿茶</span>
-              </span>
-            }
+  <GridContent>
+    <React.Fragment>
+      <Row gutter={24}>
+        <Col xl={16} lg={24} md={24} sm={24} xs={24}
+          style={{
+            marginBottom: 24,
+          }}
+        >
+          <Carousel autoplay>
+            <div>
+              <div className={styles.lunbo1}></div>
+            </div>
+            <div>
+              <div className={styles.lunbo2}></div>
+            </div>
+            <div>
+              <div className={styles.lunbo3}></div>
+            </div>
+            <div>
+              <div className={styles.lunbo4}></div>
+            </div>
+            <div>
+              <div className={styles.lunbo5}></div>
+            </div>
+          </Carousel>
+        </Col>
+        <Col xl={8} lg={24} md={24} sm={24} xs={24} style={{
+            marginBottom: 24,
+          }}>
+          <Card
+            title="热门搜索"
+            bordered={false}
+            bodyStyle={{
+              overflow: 'hidden',
+            }}
           >
-            <Menu.ItemGroup title="绿茶">
-              <Menu.Item key="1">百科</Menu.Item>
-              <Menu.Item key="2">文化</Menu.Item>
-              <Menu.Item key="3">知识</Menu.Item>
-              <Menu.Item key="4">商品</Menu.Item>
-            </Menu.ItemGroup>
-          </SubMenu>
-          <SubMenu
-            key="sub2"
-            title={
-              <span>
-                <Icon type="appstore" />
-                <span>红茶</span>
-              </span>
-            }
-          >
-            <Menu.ItemGroup title="红茶">
-              <Menu.Item key="5">百科</Menu.Item>
-              <Menu.Item key="6">文化</Menu.Item>
-              <Menu.Item key="7">知识</Menu.Item>
-              <Menu.Item key="8">商品</Menu.Item>
-            </Menu.ItemGroup>
-          </SubMenu>
-          <SubMenu
-            key="sub3"
-            title={
-              <span>
-                <Icon type="setting" />
-                <span>白茶</span>
-              </span>
-            }
-          >
-            <Menu.ItemGroup title="白茶">
-              <Menu.Item key="9">百科</Menu.Item>
-              <Menu.Item key="10">文化</Menu.Item>
-              <Menu.Item key="11">知识</Menu.Item>
-              <Menu.Item key="12">商品</Menu.Item>
-            </Menu.ItemGroup>
-          </SubMenu>
-          <SubMenu
-            key="sub4"
-            title={
-              <span>
-                <Icon type="setting" />
-                <span>黄茶</span>
-              </span>
-            }
-          >
-            <Menu.ItemGroup title="黄茶">
-              <Menu.Item key="13">百科</Menu.Item>
-              <Menu.Item key="14">文化</Menu.Item>
-              <Menu.Item key="15">知识</Menu.Item>
-              <Menu.Item key="16">商品</Menu.Item>
-            </Menu.ItemGroup>
-          </SubMenu>
-          <SubMenu
-            key="sub5"
-            title={
-              <span>
-                <Icon type="setting" />
-                <span>黑茶</span>
-              </span>
-            }
-          >
-            <Menu.ItemGroup title="黑茶">
-              <Menu.Item key="17">百科</Menu.Item>
-              <Menu.Item key="18">文化</Menu.Item>
-              <Menu.Item key="19">知识</Menu.Item>
-              <Menu.Item key="20">商品</Menu.Item>
-            </Menu.ItemGroup>
-          </SubMenu>
-          <SubMenu
-            key="sub6"
-            title={
-              <span>
-                <Icon type="setting" />
-                <span>青茶</span>
-              </span>
-            }
-          >
-            <Menu.ItemGroup title="青茶">
-              <Menu.Item key="21">百科</Menu.Item>
-              <Menu.Item key="22">文化</Menu.Item>
-              <Menu.Item key="23">知识</Menu.Item>
-              <Menu.Item key="24">商品</Menu.Item>
-            </Menu.ItemGroup>
-          </SubMenu>
-          <SubMenu
-            key="sub7"
-            title={
-              <span>
-                <Icon type="setting" />
-                <span>花茶及其他</span>
-              </span>
-            }
-          >
-            <Menu.ItemGroup title="花茶及其他">
-              <Menu.Item key="21">百科</Menu.Item>
-              <Menu.Item key="22">文化</Menu.Item>
-              <Menu.Item key="23">知识</Menu.Item>
-              <Menu.Item key="24">商品</Menu.Item>
-            </Menu.ItemGroup>
-          </SubMenu>
-        </Menu>
-      </Col>
-      <Col xs={10} sm={10} md={10} lg={10} xl={10}>
-        <Carousel autoplay>
-          <div>
-            <div className={styles.lunbo1}></div>
-          </div>
-          <div>
-            <div className={styles.lunbo2}></div>
-          </div>
-          <div>
-            <div className={styles.lunbo3}></div>
-          </div>
-          <div>
-            <div className={styles.lunbo4}></div>
-          </div>
-          <div>
-            <div className={styles.lunbo5}></div>
-          </div>
-        </Carousel>
-        <Divider />
-      </Col>
-      <Col xs={7} sm={7} md={7} lg={7} xl={7}>
-        <Card bordered={false}>
-          <Tabs defaultActiveKey="1">
-            <TabPane
-              tab="今日话题"
-              key="1"
+            <TagCloud data={tags || []} height={285} />
+          </Card>
+        </Col>
+      </Row>
+      <Row gutter={24}>
+        <Col xl={6} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
+          <Menu onClick={handleClick} className={styles.menu} mode="vertical">
+            <SubMenu
+              key="sub1"
+              title={
+                <span>
+                  <Icon type="mail" />
+                  <span>绿茶</span>
+                </span>
+              }
             >
-              <div className={styles.topic}>
-                <Title level={4}>中国茶产业的渠道效率革命</Title>
-                <List
-                  itemLayout="vertical"
-                  size="large"
-                  // pagination={{
-                  //   onChange: page => {
-                  //     console.log(page);
-                  //   },
-                  //   pageSize: 3,
-                  // }}
-                  dataSource={listData}
-                  // footer={
-                  //   <div>
-                  //     <b>ant design</b> footer part
-                  //   </div>
-                  // }
-                  renderItem={item => (
-                    <List.Item
-                      key={item.title}
-                      actions={[
-                        <IconText type="star-o" text="156" key="list-vertical-star-o" />,
-                        // <IconText type="like-o" text="156" key="list-vertical-like-o" />,
-                        <IconText type="message" text="2" key="list-vertical-message" />,
-                      ]}
-                      extra={
-                        <img
-                          width={272}
-                          alt="logo"
-                          src={picture}
-                        />
-                      }
-                    >
-                      <List.Item.Meta
-                        avatar={<Avatar src={touxiang} />}
-                        title={<a href={item.href}>{item.title}</a>}
-                        description={item.description}
-                      />
-                      {/* {item.content} */}
-                    </List.Item>
-                  )}
-                />
-              </div>
-            </TabPane>
-            <TabPane
-              tab="最近更新"
-              key="2"
+              <Menu.ItemGroup title="绿茶">
+                <Menu.Item key="1">百科</Menu.Item>
+                <Menu.Item key="2">文化</Menu.Item>
+                <Menu.Item key="3">知识</Menu.Item>
+                <Menu.Item key="4">商品</Menu.Item>
+              </Menu.ItemGroup>
+            </SubMenu>
+            <SubMenu
+              key="sub2"
+              title={
+                <span>
+                  <Icon type="appstore" />
+                  <span>红茶</span>
+                </span>
+              }
             >
-               <div className={styles.infiniteScrollContainer}>
-                <InfiniteScroll
-                  initialLoad={false}
-                  pageStart={0}
-                  useWindow={false}
-                >
+              <Menu.ItemGroup title="红茶">
+                <Menu.Item key="5">百科</Menu.Item>
+                <Menu.Item key="6">文化</Menu.Item>
+                <Menu.Item key="7">知识</Menu.Item>
+                <Menu.Item key="8">商品</Menu.Item>
+              </Menu.ItemGroup>
+            </SubMenu>
+            <SubMenu
+              key="sub3"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>白茶</span>
+                </span>
+              }
+            >
+              <Menu.ItemGroup title="白茶">
+                <Menu.Item key="9">百科</Menu.Item>
+                <Menu.Item key="10">文化</Menu.Item>
+                <Menu.Item key="11">知识</Menu.Item>
+                <Menu.Item key="12">商品</Menu.Item>
+              </Menu.ItemGroup>
+            </SubMenu>
+            <SubMenu
+              key="sub4"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>黄茶</span>
+                </span>
+              }
+            >
+              <Menu.ItemGroup title="黄茶">
+                <Menu.Item key="13">百科</Menu.Item>
+                <Menu.Item key="14">文化</Menu.Item>
+                <Menu.Item key="15">知识</Menu.Item>
+                <Menu.Item key="16">商品</Menu.Item>
+              </Menu.ItemGroup>
+            </SubMenu>
+            <SubMenu
+              key="sub5"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>黑茶</span>
+                </span>
+              }
+            >
+              <Menu.ItemGroup title="黑茶">
+                <Menu.Item key="17">百科</Menu.Item>
+                <Menu.Item key="18">文化</Menu.Item>
+                <Menu.Item key="19">知识</Menu.Item>
+                <Menu.Item key="20">商品</Menu.Item>
+              </Menu.ItemGroup>
+            </SubMenu>
+            <SubMenu
+              key="sub6"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>青茶</span>
+                </span>
+              }
+            >
+              <Menu.ItemGroup title="青茶">
+                <Menu.Item key="21">百科</Menu.Item>
+                <Menu.Item key="22">文化</Menu.Item>
+                <Menu.Item key="23">知识</Menu.Item>
+                <Menu.Item key="24">商品</Menu.Item>
+              </Menu.ItemGroup>
+            </SubMenu>
+            <SubMenu
+              key="sub7"
+              title={
+                <span>
+                  <Icon type="setting" />
+                  <span>花茶及其他</span>
+                </span>
+              }
+            >
+              <Menu.ItemGroup title="花茶及其他">
+                <Menu.Item key="21">百科</Menu.Item>
+                <Menu.Item key="22">文化</Menu.Item>
+                <Menu.Item key="23">知识</Menu.Item>
+                <Menu.Item key="24">商品</Menu.Item>
+              </Menu.ItemGroup>
+            </SubMenu>
+          </Menu>
+        </Col>
+        <Col xl={6} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
+            <Card bordered={false} title="今日好货">
+              <Carousel autoplay>
+                <div>
+                  <div className={styles.squareLunbo}><img alt="方形图片1" src={square1}/></div>
+                </div>
+                <div>
+                  <div className={styles.squareLunbo}><img alt="方形图片2" src={square2}/></div>
+                </div>
+                <div>
+                  <div className={styles.squareLunbo}><img alt="方形图片3" src={square3}/></div>
+                </div>
+              </Carousel>
+            </Card>
+        </Col>
+        <Col xl={12} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
+          <Card bordered={false}>
+            <Tabs defaultActiveKey="1">
+              <TabPane
+                tab="今日话题"
+                key="1"
+              >
+                <div className={styles.topic}>
+                  <Title level={4}>中国茶产业的渠道效率革命</Title>
                   <List
-                    itemLayout="horizontal"
-                    dataSource={data3}
-                    bordered={false}
+                    itemLayout="vertical"
+                    size="large"
+                    dataSource={listData}
                     renderItem={item => (
-                      <List.Item>
-                        <List.Item.Meta
-                          avatar={<Avatar src={touxiang2} />}
-                          title={<a href="https://ant.design">{item.title}</a>}
-                          description={<span>{item.description}</span>}
-                        />
-                        {/* <div>查看详情</div> */}
-                      </List.Item>
-                    )}
-                  />
-                </InfiniteScroll>
-              </div>
-            </TabPane>
-            <TabPane
-              tab="茶叶知识"
-              key="3"
-            >
-              <div className={styles.infiniteScrollContainer}>
-                <InfiniteScroll
-                  initialLoad={false}
-                  pageStart={0}
-                  useWindow={false}
-                >
-                  <List
-                    itemLayout="horizontal"
-                    dataSource={data3}
-                    bordered={false}
-                    renderItem={item => (
-                      <List.Item>
-                        <List.Item.Meta
-                          avatar={<Avatar src={touxiang2} />}
-                          title={<a href="https://ant.design">{item.title}</a>}
-                          description={<span>{item.description}</span>}
-                        />
-                        {/* <div>查看详情</div> */}
-                      </List.Item>
-                    )}
-                  />
-                </InfiniteScroll>
-              </div>
-            </TabPane>
-            <TabPane
-              tab="茶叶文化"
-              key="4"
-            >
-              <div className={styles.infiniteScrollContainer}>
-                <InfiniteScroll
-                  initialLoad={false}
-                  pageStart={0}
-                  // loadMore={this.handleInfiniteOnLoad}
-                  // hasMore={!this.state.loading && this.state.hasMore}
-                  useWindow={false}
-                >
-                  <List
-                    itemLayout="horizontal"
-                    dataSource={data4}
-                    renderItem={item => (
-                      <List.Item>
+                      <List.Item
+                        key={item.title}
+                        actions={[
+                          <IconText type="star-o" text="156" key="list-vertical-star-o" />,
+                          // <IconText type="like-o" text="156" key="list-vertical-like-o" />,
+                          <IconText type="message" text="2" key="list-vertical-message" />,
+                        ]}
+                        extra={
+                          <img
+                            width={272}
+                            alt="logo"
+                            src={picture}
+                          />
+                        }
+                      >
                         <List.Item.Meta
                           avatar={<Avatar src={touxiang} />}
-                          title={<a href="https://ant.design">{item.title}</a>}
-                          description={<span>{item.description}</span>}
+                          title={<a href={item.href}>{item.title}</a>}
+                          description={item.description}
                         />
-                        {/* <div>查看详情</div> */}
+
                       </List.Item>
                     )}
                   />
-                </InfiniteScroll>
-              </div>
-            </TabPane>
-          </Tabs>
-        </Card>
-        <Divider />
-      </Col>
-    </Row>
-    {/* <Divider /> */}
-  </PageHeaderWrapper>
+                </div>
+              </TabPane>
+              <TabPane
+                tab="最近更新"
+                key="2"
+              >
+                <div className={styles.infiniteScrollContainer}>
+                  <InfiniteScroll
+                    initialLoad={false}
+                    pageStart={0}
+                    useWindow={false}
+                  >
+                    <List
+                      itemLayout="horizontal"
+                      dataSource={data3}
+                      bordered={false}
+                      renderItem={item => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={<Avatar src={touxiang2} />}
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description={<span>{item.description}</span>}
+                          />
+
+                        </List.Item>
+                      )}
+                    />
+                  </InfiniteScroll>
+                </div>
+              </TabPane>
+              <TabPane
+                tab="茶叶知识"
+                key="3"
+              >
+                <div className={styles.infiniteScrollContainer}>
+                  <InfiniteScroll
+                    initialLoad={false}
+                    pageStart={0}
+                    useWindow={false}
+                  >
+                    <List
+                      itemLayout="horizontal"
+                      dataSource={data3}
+                      bordered={false}
+                      renderItem={item => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={<Avatar src={touxiang2} />}
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description={<span>{item.description}</span>}
+                          />
+
+                        </List.Item>
+                      )}
+                    />
+                  </InfiniteScroll>
+                </div>
+              </TabPane>
+              <TabPane
+                tab="茶叶文化"
+                key="4"
+              >
+                <div className={styles.infiniteScrollContainer}>
+                  <InfiniteScroll
+                    initialLoad={false}
+                    pageStart={0}
+                    useWindow={false}
+                  >
+                    <List
+                      itemLayout="horizontal"
+                      dataSource={data4}
+                      renderItem={item => (
+                        <List.Item>
+                          <List.Item.Meta
+                            avatar={<Avatar src={touxiang} />}
+                            title={<a href="https://ant.design">{item.title}</a>}
+                            description={<span>{item.description}</span>}
+                          />
+
+                        </List.Item>
+                      )}
+                    />
+                  </InfiniteScroll>
+                </div>
+              </TabPane>
+            </Tabs>
+          </Card>
+        </Col>
+      </Row>
+      <Row gutter={24}>
+        <Col xl={12} lg={24} sm={24} xs={24}style={{ marginBottom: 24 }}>
+          <Card bordered={false} title="有好货">
+
+          </Card>
+        </Col>
+        <Col xl={12} lg={24} sm={24} xs={24}style={{ marginBottom: 24 }}>
+          <Card bordered={false} title="热卖单品">
+            
+          </Card>
+        </Col>
+      </Row>
+    </React.Fragment>
+  </GridContent>
 );
