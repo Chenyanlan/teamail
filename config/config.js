@@ -116,6 +116,18 @@ export default {
               component: './mall/Mall',
             },
             {
+              path: '/mall/:id',
+              name: 'malldetail',
+              hideInMenu:true,
+              component: './mall/MallDetail',
+            },
+            {
+              path: '/mall/shopping/:id',
+              name: 'malldetailshopping',
+              hideInMenu:true,
+              component: './mall/Shopping',
+            },
+            {
               path: '/bbs',
               name: 'bbs',
               icon: 'smile',

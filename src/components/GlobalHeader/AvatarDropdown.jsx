@@ -1,4 +1,4 @@
-import { Avatar, Icon, Menu, Spin } from 'antd';
+import { Avatar, Icon, Menu, Spin, Divider } from 'antd';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import React from 'react';
 import { connect } from 'dva';
@@ -22,7 +22,10 @@ class AvatarDropdown extends React.Component {
 
       return;
     }
-
+    if(key==='shopping'){
+      router.push(`/mall/shopping/${id}`);
+      return;
+    }
     router.push(`/account/${key}/${id}`);
   };
 
@@ -50,7 +53,11 @@ class AvatarDropdown extends React.Component {
         </Menu.Item>
         {/* )} */}
         {/* {menu && <Menu.Divider />} */}
-
+        <Menu.Item key="shopping">
+          <Icon type="shopping-cart" />
+          <FormattedMessage id="menu.account.shopping" defaultMessage="shopping" />
+        </Menu.Item>
+        <Menu.Divider />
         <Menu.Item key="logout">
           <Icon type="logout" />
           <FormattedMessage id="menu.account.logout" defaultMessage="logout" />

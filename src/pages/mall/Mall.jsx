@@ -2,17 +2,36 @@ import React from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import {connect} from 'dva';
 import moment from 'moment';
-import { Card, Col, Form, List, Row, Select, Typography } from 'antd';
+import { Card, Col, Form, List, Row, Select, Typography,Button,Divider } from 'antd';
 import  StandardFormRow from '../../components/StandardFormRow';
 import TagSelect from '../../components/TagSelect';
 import AvatarList from '../../components/AvatarList';
+import square7 from '../../assets/square7.jpg';
+import square8 from '../../assets/square8.jpg';
+import square9 from '../../assets/square9.jpg';
+import square10 from '../../assets/square10.jpg';
 import styles from './mall.less';
 
 const { Option } = Select;
-const { Paragraph } = Typography;
+const { Paragraph,Text } = Typography;
 const FormItem = Form.Item;
 const pageSize = 5;
 const getKey = (id, index) => `${id}-${index}`;
+const list2 = [
+  { title: '三万昌 碧螺春2019新茶特级洞庭山正宗原产', cover: square7, subDescription: '三万昌 碧螺春2019新茶特级洞庭山正宗原产', money: Math.floor(Math.random() * 50) + 40,count:Math.floor(Math.random() * 50) + 40 },
+  { title: '金牌卖家 特技碧螺春四川特级绿茶', cover: square8, subDescription: '金牌卖家 特技碧螺春四川特级绿茶川特级绿茶',money: Math.floor(Math.random() * 50) + 40, count: Math.floor(Math.random() * 50) + 40 },
+  { title: '2019新茶上市西湖牌特级碧螺春200g纪念纸包茶叶春茶,龙井绿茶', cover: square9, subDescription: '2019新茶上市西湖牌特级碧螺春200g纪念纸包茶叶春茶,龙井绿茶',money: Math.floor(Math.random() * 50) + 40, count: Math.floor(Math.random() * 50) + 40 },
+  { title: '买一送一铁观音 茶叶1725乌龙茶新茶铁观音浓香型礼盒装', cover: square10, subDescription: '买一送一铁观音 茶叶1725乌龙茶新茶铁观音浓香型礼盒装',money: Math.floor(Math.random() * 50) + 40, count: Math.floor(Math.random() * 50) + 40 },
+  { title: '三万昌 碧螺春2019新茶特级洞庭山正宗原产', cover: square7, subDescription: '三万昌 碧螺春2019新茶特级洞庭山正宗原产', money: Math.floor(Math.random() * 50) + 40,count:Math.floor(Math.random() * 50) + 40 },
+  { title: '金牌卖家 特技碧螺春四川特级绿茶', cover: square8, subDescription: '金牌卖家 特技碧螺春四川特级绿茶川特级绿茶',money: Math.floor(Math.random() * 50) + 40, count: Math.floor(Math.random() * 50) + 40 },
+  { title: '2019新茶上市西湖牌特级碧螺春200g纪念纸包茶叶春茶,龙井绿茶', cover: square9, subDescription: '2019新茶上市西湖牌特级碧螺春200g纪念纸包茶叶春茶,龙井绿茶',money: Math.floor(Math.random() * 50) + 40, count: Math.floor(Math.random() * 50) + 40 },
+  { title: '买一送一铁观音 茶叶1725乌龙茶新茶铁观音浓香型礼盒装', cover: square10, subDescription: '买一送一铁观音 茶叶1725乌龙茶新茶铁观音浓香型礼盒装',money: Math.floor(Math.random() * 50) + 40, count: Math.floor(Math.random() * 50) + 40 },
+  { title: '三万昌 碧螺春2019新茶特级洞庭山正宗原产', cover: square7, subDescription: '三万昌 碧螺春2019新茶特级洞庭山正宗原产', money: Math.floor(Math.random() * 50) + 40,count:Math.floor(Math.random() * 50) + 40 },
+  { title: '金牌卖家 特技碧螺春四川特级绿茶', cover: square8, subDescription: '金牌卖家 特技碧螺春四川特级绿茶川特级绿茶',money: Math.floor(Math.random() * 50) + 40, count: Math.floor(Math.random() * 50) + 40 },
+  { title: '2019新茶上市西湖牌特级碧螺春200g纪念纸包茶叶春茶,龙井绿茶', cover: square9, subDescription: '2019新茶上市西湖牌特级碧螺春200g纪念纸包茶叶春茶,龙井绿茶',money: Math.floor(Math.random() * 50) + 40, count: Math.floor(Math.random() * 50) + 40 },
+  { title: '买一送一铁观音 茶叶1725乌龙茶新茶铁观音浓香型礼盒装', cover: square10, subDescription: '买一送一铁观音 茶叶1725乌龙茶新茶铁观音浓香型礼盒装',money: Math.floor(Math.random() * 50) + 40, count: Math.floor(Math.random() * 50) + 40 },
+]
+
 
 @Form.create()
 @connect(({ listSearchArticles, loading }) => ({
@@ -30,6 +49,8 @@ class Mall extends React.Component {
       }
     })
   }
+
+  
 
   render() {
 
@@ -61,7 +82,18 @@ class Mall extends React.Component {
           sm: 2,
           xs: 1,
         }}
-        dataSource={list}
+        dataSource={list2}
+        loadMore={
+        <div
+          style={{
+            textAlign: 'center',
+            marginTop: 12,
+            height: 32,
+            lineHeight: '32px',
+          }}
+        >
+          <Button onClick={this.onLoadMore}>加载更多</Button>
+        </div>}
         renderItem={item=>(
           <List.Item>
             <Card className={styles.card} hoverable
@@ -69,26 +101,15 @@ class Mall extends React.Component {
               <img alt={item.title} src={item.cover} />
               // <div className={styles.img}></div>
              }>
-              <Card.Meta title={<a>{item.title}</a>}
+              <Card.Meta title={<a href="../mall/1">{item.title}</a>}
               description={
               <Paragraph className={styles.item} ellipsis={{rows:2}}>
                 {item.subDescription}
               </Paragraph>}
                />
                <div className={styles.cardItemContent}>
-                <span>{moment(item.updatedAt).fromNow()}</span>
-                <div className={styles.avatarList}>
-                  <AvatarList size="small">
-                      {item.members.map((member, i) => (
-                        <AvatarList.Item
-                          key={getKey(item.id, i)}
-                          src={member.avatar}
-                          tips={member.name}
-                        />
-                      ))}
-                    </AvatarList>
-                    <span>...点击过</span>
-                </div>
+                  <span className={styles.money}> <Text type="danger" strong>￥&nbsp;&nbsp;&nbsp;{item.money}</Text></span>
+                      <span className={styles.count}> 月销&nbsp;&nbsp;{item.count}&nbsp;笔</span>
                </div>
             </Card>
           </List.Item>
@@ -172,6 +193,7 @@ class Mall extends React.Component {
           </Form>
         </Card>
         <div className={styles.cardList}>{cardList}</div>
+        <Divider>END</Divider>
       </PageHeaderWrapper>
     );
   }

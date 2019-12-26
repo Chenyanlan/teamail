@@ -4,7 +4,7 @@ import { Button, Form, Input, Select, Upload, message } from 'antd';
 import { connect } from 'dva';
 import styles from './index.less';
 import GeographicView from './GeographicView';
-// import PhoneView from './PhoneView';
+import avatar3 from '../../../../assets/avatar3.jpg';
 
 const FormItem = Form.Item;
 const { Option } = Select; // 头像组件 方便以后独立，增加裁剪之类的功能
@@ -15,7 +15,7 @@ const AvatarView = ({ avatar }) => (
         <FormattedMessage id="accountsettings.basic.avatar" defaultMessage="Avatar" />
       </div>
       <div className={styles.avatar}>
-        <img src={avatar} alt="avatar" />
+        <img src={avatar3} alt="avatar" />
       </div>
       <Upload fileList={[]}>
         <div className={styles.button_view}>

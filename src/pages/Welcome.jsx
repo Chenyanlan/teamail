@@ -1,16 +1,23 @@
 import React from 'react';
 import { GridContent } from '@ant-design/pro-layout';
 import { FormattedMessage } from 'umi-plugin-react/locale';
+import moment from 'moment';
 import { Carousel, Row, Col, Tabs, Icon, Card, List, Avatar, Typography, Menu, Divider } from 'antd';
-import TagCloud from '../components/TagCloud'
 import InfiniteScroll from 'react-infinite-scroller';
+import TagCloud from '../components/TagCloud'
 import touxiang from '../assets/avatar2.jpg';
 import touxiang2 from '../assets/avatar3.jpg';
 import picture from '../assets/picture2.jfif';
 import square1 from '../assets/square1.png';
 import square2 from '../assets/square2.png';
 import square3 from '../assets/square3.png';
-
+import square4 from '../assets/square4.png';
+import square5 from '../assets/square5.png';
+import square6 from '../assets/square6.png';
+import square7 from '../assets/square7.jpg';
+import square8 from '../assets/square8.jpg';
+import square9 from '../assets/square9.jpg';
+import square10 from '../assets/square10.jpg';
 import styles from './Welcome.less';
 
 const listData = [];
@@ -35,14 +42,6 @@ const IconText = ({ type, text }) => (
     {text}
   </span>
 );
-const data2 = [
-  'Racing car sprays burning fuel into crowd.',
-  'Japanese princess to wed commoner.',
-  'Australian walks 100km after outback crash.',
-  'Man charged over missing wedding girl.',
-  'Los Angeles battles huge wildfires.',
-  'Man charged over missing wedding girl.',
-];
 const data3 = [
   {
     title: '绿茶、白茶、黄茶、青茶、红茶、黑茶这六大类茶类怎样区分？',
@@ -80,7 +79,7 @@ const data4 = [
   },
 ];
 const { TabPane } = Tabs;
-const { Title } = Typography;
+const { Title, Paragraph,Text } = Typography;
 const { SubMenu } = Menu;
 // 欢迎界面，用户登录主页面
 const tags = [
@@ -161,6 +160,18 @@ const tags = [
   { name: '黑茶', value: Math.floor(Math.random() * 50) + 40 },
   { name: '青茶', value: Math.floor(Math.random() * 50) + 40 },
 ]
+const list = [
+  { title: '2019新茶上市', cover: square4, subDescription: '西湖牌特级碧螺春200g纪念纸包茶叶春茶,龙井绿茶', count: Math.floor(Math.random() * 50) + 40 },
+  { title: '大促销', cover: square3, subDescription: '西湖牌特级碧螺春200g纪念纸包茶叶春茶,龙井绿茶', count: Math.floor(Math.random() * 50) + 40 },
+  { title: '2019新茶上市', cover: square5, subDescription: '西湖牌特级碧螺春200g纪念纸包茶叶春茶,龙井绿茶', count: Math.floor(Math.random() * 50) + 40 },
+  { title: '今日热点', cover: square6, subDescription: '西湖牌特级碧螺春200g纪念纸包茶叶春茶,龙井绿茶', count: Math.floor(Math.random() * 50) + 40 },
+]
+const list2 = [
+  { title: '三万昌 碧螺春2019新茶特级洞庭山正宗原产', cover: square7, subDescription: '三万昌 碧螺春2019新茶特级洞庭山正宗原产', money: Math.floor(Math.random() * 50) + 40,count:Math.floor(Math.random() * 50) + 40 },
+  { title: '金牌卖家 特技碧螺春四川特级绿茶', cover: square8, subDescription: '金牌卖家 特技碧螺春四川特级绿茶',money: Math.floor(Math.random() * 50) + 40, count: Math.floor(Math.random() * 50) + 40 },
+  { title: '2019新茶上市西湖牌特级碧螺春200g纪念纸包茶叶春茶,龙井绿茶', cover: square9, subDescription: '2019新茶上市西湖牌特级碧螺春200g纪念纸包茶叶春茶,龙井绿茶',money: Math.floor(Math.random() * 50) + 40, count: Math.floor(Math.random() * 50) + 40 },
+  { title: '买一送一铁观音 茶叶1725乌龙茶新茶铁观音浓香型礼盒装', cover: square10, subDescription: '买一送一铁观音 茶叶1725乌龙茶新茶铁观音浓香型礼盒装',money: Math.floor(Math.random() * 50) + 40, count: Math.floor(Math.random() * 50) + 40 },
+]
 export default () => (
   <GridContent>
     <React.Fragment>
@@ -189,8 +200,8 @@ export default () => (
           </Carousel>
         </Col>
         <Col xl={8} lg={24} md={24} sm={24} xs={24} style={{
-            marginBottom: 24,
-          }}>
+          marginBottom: 24,
+        }}>
           <Card
             title="热门搜索"
             bordered={false}
@@ -320,19 +331,19 @@ export default () => (
           </Menu>
         </Col>
         <Col xl={6} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
-            <Card bordered={false} title="今日好货">
-              <Carousel autoplay>
-                <div>
-                  <div className={styles.squareLunbo}><img alt="方形图片1" src={square1}/></div>
-                </div>
-                <div>
-                  <div className={styles.squareLunbo}><img alt="方形图片2" src={square2}/></div>
-                </div>
-                <div>
-                  <div className={styles.squareLunbo}><img alt="方形图片3" src={square3}/></div>
-                </div>
-              </Carousel>
-            </Card>
+          <Card bordered={false} title="今日好货">
+            <Carousel autoplay>
+              <div>
+                <div className={styles.squareLunbo}><img alt="方形图片1" src={square1} /></div>
+              </div>
+              <div>
+                <div className={styles.squareLunbo}><img alt="方形图片2" src={square2} /></div>
+              </div>
+              <div>
+                <div className={styles.squareLunbo}><img alt="方形图片3" src={square6} /></div>
+              </div>
+            </Carousel>
+          </Card>
         </Col>
         <Col xl={12} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
           <Card bordered={false}>
@@ -462,17 +473,89 @@ export default () => (
         </Col>
       </Row>
       <Row gutter={24}>
-        <Col xl={12} lg={24} sm={24} xs={24}style={{ marginBottom: 24 }}>
-          <Card bordered={false} title="有好货">
-
+        <Col xl={12} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
+          <Card bordered={false} title="每日好货">
+            <List
+              rowKey="id"
+              grid={{
+                gutter: 24,
+                xl: 2,
+                lg: 2,
+                md: 2,
+                sm: 1,
+                xs: 1,
+              }}
+              dataSource={list}
+              renderItem={item => (
+                <List.Item>
+                  <Card
+                    hoverable
+                    cover={<img alt={item.title} src={item.cover} />}
+                  >
+                    <Card.Meta
+                      title={<a href="./mall/1">{item.title}</a>}
+                      description={
+                        <Paragraph
+                          ellipsis={{
+                            rows: 2,
+                          }}
+                        >
+                          {item.subDescription}
+                        </Paragraph>
+                      }
+                    />
+                    <div>
+                      <span><Icon type="smile" theme="twoTone" twoToneColor="#eb2f96" />&nbsp;&nbsp;&nbsp;{item.count}人都说好</span>
+                    </div>
+                  </Card>
+                </List.Item>
+              )}
+            />
           </Card>
         </Col>
-        <Col xl={12} lg={24} sm={24} xs={24}style={{ marginBottom: 24 }}>
+        <Col xl={12} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
           <Card bordered={false} title="热卖单品">
-            
+            <List
+              rowKey="id"
+              grid={{
+                gutter: 24,
+                xl: 2,
+                lg: 2,
+                md: 2,
+                sm: 1,
+                xs: 1,
+              }}
+              dataSource={list2}
+              renderItem={item => (
+                <List.Item>
+                  <Card
+                    hoverable
+                    cover={<img alt={item.title} src={item.cover} />}
+                  >
+                    <Card.Meta
+                      title={<a href="./mall/1">{item.title}</a>}
+                      description={
+                        <Paragraph
+                          ellipsis={{
+                            rows: 2,
+                          }}
+                        >
+                          {item.subDescription}
+                        </Paragraph>
+                      }
+                    />
+                    <div>
+                      <span className={styles.money}> <Text type="danger" strong>￥&nbsp;&nbsp;&nbsp;{item.money}</Text></span>
+                      <span className={styles.count}> 月销&nbsp;&nbsp;{item.count}&nbsp;笔</span>
+                    </div>
+                  </Card>
+                </List.Item>
+              )}
+            />
           </Card>
         </Col>
       </Row>
+      <Divider>END</Divider>
     </React.Fragment>
   </GridContent>
 );

@@ -4,6 +4,7 @@ import { Avatar,Card,Col,Divider,Icon,Input,Row,Tag } from 'antd';
 import { GridContent } from '@ant-design/pro-layout';
 import styles from './AccountCenter.less';
 import Articles from './Articles/Articles';
+import avatar from '../../../assets/avatar3.jpg';
 import { Link } from 'umi';
 
 const operationTablList = [
@@ -157,11 +158,11 @@ class AccountCenter extends Component{
                             {!dataLoading && (
                                 <div>
                                     <div className={styles.avatarHolder}>
-                                         <img src={currentUser.avator} alt=""/>
+                                         <img src={avatar} alt=""/>
                                          <div className={styles.name}>{currentUser.name}</div>
-                                        <div>{currentUser.signature}</div>
+                                        <div>本质是一个DD，在所有梦中沉浮</div>
                                     </div>
-                                    <div className={styles.detail}>
+                                    {/* <div className={styles.detail}>
                                         <p>
                                             <i className={styles.title}/>
                                             {currentUser.title}
@@ -175,7 +176,7 @@ class AccountCenter extends Component{
                                             {currentUser.geographic.province.label}
                                             {currentUser.geographic.city.label}
                                         </p>
-                                    </div>
+                                    </div> */}
                                     <Divider dashed />
                                     <div className={styles.tags}>
                                         <div className={styles.tagsTile}>标签</div>
