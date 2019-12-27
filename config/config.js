@@ -128,6 +128,12 @@ export default {
               component: './mall/Shopping',
             },
             {
+              path: '/mallpaypal',
+              name: 'mallpaypal',
+              hideInMenu:true,
+              component: './mall/PayPal/index',
+            },
+            {
               path: '/bbs',
               name: 'bbs',
               icon: 'smile',

@@ -4,7 +4,7 @@ export default {
   primaryColor: 'daybreak',
   layout: 'topmenu',
   contentWidth: 'Fixed',
-  fixedHeader: false,
+  fixedHeader: true,
   autoHideHeader: false,
   fixSiderbar: false,
   colorWeak: false,

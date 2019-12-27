@@ -34,7 +34,7 @@ class Articles extends Component {
                         ]}>
                         <List.Item.Meta
                             title={
-                                <a className={styles.listItemMetaTile} href={item.href}>
+                                <a className={styles.listItemMetaTile} href="../bbs/1">
                                     {item.title}
                                 </a>
                             }

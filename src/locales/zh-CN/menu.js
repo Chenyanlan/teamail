@@ -5,6 +5,7 @@ export default {
   'menu.wiki': '茶 · 百科',
   'menu.bbsdetail': '论坛详情',
   'menu.malldetail': '商品详情',
+  'menu.mallpaypal': '付款页面',
   'menu.malldetailshopping': '购物车',
   'menu.more-blocks': '更多区块',
   'menu.home': '首页',

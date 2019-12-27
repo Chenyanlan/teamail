@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from 'react'
 import { Divider, Button, Card, Statistic, Carousel, Descriptions, Cascader, Icon, InputNumber, Tabs, List, Avatar, Tooltip, Empty, Typography, Row, Col } from 'antd';
 import { GridContent, PageHeaderWrapper, RouteContext } from '@ant-design/pro-layout';
+import router from 'umi/router';
 import styles from './index.less';
 import malldetail1 from '../../../assets/malldetail1.jpg';
 import malldetail2 from '../../../assets/malldetail2.jpg';
@@ -77,6 +78,10 @@ class MallDetail extends Component {
         };
     }
 
+    toShoppingCart = () =>{
+        router.push('/mall/shopping/1');
+    }
+
     render() {
 
         return (
@@ -130,7 +135,7 @@ class MallDetail extends Component {
                                 </Descriptions.Item>
                                 <Descriptions.Item span={3}>
                                     <Button type="danger" className={styles.btn} size="large" >立即购买</Button>
-                                    <Button type="danger" icon="shopping-cart" className={styles.btn2} size="large" >加入购物车</Button>
+                                    <Button onClick={this.toShoppingCart} type="danger" icon="shopping-cart" className={styles.btn2} size="large" >加入购物车</Button>
                                 </Descriptions.Item>
                             </Descriptions>
                         </Card>
