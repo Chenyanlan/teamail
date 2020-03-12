@@ -121,28 +121,6 @@ class UserAdmin extends Component {
               type: 'user/modifyUser',
               payload: values,
           })
-          if (result.success === true) {
-            notification.success({
-                message: '成功',
-                description:
-                  '用户密码和权限修改成功',
-                onClick: () => {
-                  console.log('Notification Clicked!');
-                },
-              });
-              this.getData();
-          } else {
-            notification.error({
-                message: '失败',
-                description:
-                  '用户密码和权限修改失败',
-                onClick: () => {
-                  console.log('Notification Clicked!');
-                },
-              });
-              this.getData();
-          }
-          this.getData();
           form.resetFields();
           this.setState({ visible: false });
         });

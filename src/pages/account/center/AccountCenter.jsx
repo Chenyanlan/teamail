@@ -1,36 +1,26 @@
 import React,{Component} from 'react';
 import { connect } from 'dva';
-import { Avatar,Card,Col,Divider,Icon,Input,Row,Tag } from 'antd';
+import { Avatar,Card,Col,Divider,Icon,Input,Row,Button } from 'antd';
 import { GridContent } from '@ant-design/pro-layout';
 import styles from './AccountCenter.less';
 import Articles from './Articles/Articles';
-import avatar from '../../../assets/avatar3.jpg';
+import ModifyArticle from '../../../components/FormComponents/ModifyArticle';
 import { Link } from 'umi';
 
 const operationTablList = [
     {
         key: 'articles',
-        tab:(
+        tab: (
             <span>
-                文章{' '}
-                <span
-                    style={{fontSize:14}}
-                >
-                    (8)
-                </span>
+                文章
             </span>
         ),
     },
     {
         key: 'collection',
-        tab:(
+        tab: (
             <span>
-                收藏{' '}
-                <span
-                    style={{fontSize:14}}
-                >
-                    (8)
-                </span>
+                收藏
             </span>
         ),
     },
@@ -50,6 +40,8 @@ class AccountCenter extends Component {
             inputVisible: false,
             inputValue: '',
             tabKey: 'articles',
+            visible: false,
+            article: {},
         }
     }
 
@@ -65,6 +57,9 @@ class AccountCenter extends Component {
         });
         dispatch({
             type: 'accountCenter/fetch',
+            payload: {
+                articleAuthorId: localStorage.getItem('userId'),
+            }
         })
     }
 
@@ -121,26 +116,51 @@ class AccountCenter extends Component {
 
       renderChildrenByTabKey = tabKey => {
         if (tabKey === 'collection') {
-        //   return <Projects />;
             return <Articles />;
         }
-    
-        // if (tabKey === 'applications') {
-        // //   return <Applications />;
-        // }
-    
+
         if (tabKey === 'articles') {
-            // console.log('articles')
           return <Articles />;
         }
-    
         return null;
+      };
+
+      showModal = () => {
+        this.setState({ visible: true });
+      };
+    
+      handleCancel = () => {
+        this.setState({ visible: false });
+      };
+    
+      handleCreate = () => {
+        const { form } = this.formRef.props;
+        const { dispatch } = this.props;
+        form.validateFields((err, values) => {
+          if (err) {
+            return;
+          }
+    
+          console.log('Received values of form: ', values);
+          values.articleAuthorId = localStorage.getItem('userId');
+          dispatch({
+              type: 'accountCenter/addArticle',
+              payload: values,
+          })
+          form.resetFields();
+          this.setState({ visible: false });
+        });
+      };
+    
+      saveFormRef = formRef => {
+        this.formRef = formRef;
       };
 
     render() {
         // console.log(this.props);
         const { newTags, inputVisible, inputValue, tabKey } = this.state;
         const {currentUser, currentUserLoading } = this.props;
+        console.log(currentUser);
         const dataLoading = currentUserLoading || !(currentUser && Object.keys(currentUser).length);
         return (
             <GridContent>
@@ -153,23 +173,27 @@ class AccountCenter extends Component {
                                          <img src={currentUser.userAvatar} alt=""/>
                                          <div className={styles.name}>{currentUser.userName}</div>
                                          <Divider dashed />
-                                        <div>{currentUser.userSignature}</div>
+                                        <div>签名：{currentUser.userSignature}</div>
                                     </div>
-                                    {/* <div className={styles.detail}>
+                                    <Divider dashed />
+                                    <div className={styles.detail}>
                                         <p>
                                             <i className={styles.title}/>
-                                            {currentUser.title}
+                                            {currentUser.userAuthority}
                                         </p>
                                         <p>
                                             <i className={styles.group}/>
-                                            {currentUser.group}
+                                            {currentUser.userTel}
                                         </p>
                                         <p>
                                             <i className={styles.address}/>
-                                            {currentUser.geographic.province.label}
-                                            {currentUser.geographic.city.label}
+                                            {currentUser.userPlace}
                                         </p>
-                                    </div> */}
+                                    </div>
+                                    <Divider dashed />
+                                    <Button onClick={this.showModal} className={styles.add} type="primary" icon="plus">
+                                    写文章
+                                    </Button>
                                     {/* <Divider dashed />
                                     <div className={styles.tags}>
                                         <div className={styles.tagsTile}>标签</div>
@@ -227,6 +251,13 @@ class AccountCenter extends Component {
                         </Card>
                     </Col>
                 </Row>
+                <ModifyArticle
+                    wrappedComponentRef={this.saveFormRef}
+                    visible={this.state.visible}
+                    onCancel={this.handleCancel}
+                    onCreate={this.handleCreate}
+                    article = {this.state.article}
+                />
             </GridContent>
         )
     }

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import moment from 'moment';
+import { connect } from 'dva';
 import { Row, Col, Typography, Menu, Icon, Card, Divider, List, Avatar, Comment, Tooltip, Button, Input,Form } from 'antd';
 import styles from './bbsdetail.less';
 import bbsdetail1 from '../../assets/bbsdetail1.png';
@@ -33,6 +34,10 @@ const Editor = ({ onChange, onSubmit, submitting, value }) => (
         </Form.Item>
     </div>
 );
+
+@connect(({ listSearchArticles }) => ({
+    listSearchArticles,
+  }))
 class BbsDetail extends Component {
 
     constructor(props) {
@@ -42,6 +47,18 @@ class BbsDetail extends Component {
             submitting: false,
             value: '',
         };
+    }
+
+    componentDidMount() {
+        console.log(this.props);
+        const { dispatch, match: { params: { id } } } = this.props;
+        console.log(id);
+        dispatch({
+            type: 'listSearchArticles/getArticleById',
+            payload: {
+                articleId: id,
+            },
+        })
     }
 
     handleSubmit = () => {
@@ -78,6 +95,8 @@ class BbsDetail extends Component {
 
     render() {
         const { comments, submitting, value } = this.state;
+        console.log(this.props);
+        const { listSearchArticles: { article } } = this.props;
         const IconText = ({ type, text }) => (
             <span>
                 <Icon
@@ -92,21 +111,19 @@ class BbsDetail extends Component {
         const title = (
             <>
                 <Title level={4}>
-                    绿茶、白茶、黄茶、青茶、红茶、黑茶这六大茶类怎样区分？
+                    {article.articleTitle}
                 </Title>
-                <span>{moment().format('YYYY-MM-DD HH:mm')}</span>
+                <span>{moment(article.updateTime).format('YYYY-MM-DD HH:mm')}</span>
                 &nbsp;&nbsp;
-                <span>作者：nanase</span>
+                <span>作者：{article.userName}</span>
 
             </>
         )
         const extra = (
             <>
-                <IconText key="star" type="star-o" text={77} />
+                <IconText key="star" type="star-o" text={article.articleStar} />
                 <Divider type="vertical" />
-                <IconText key="like" type="like-o" text={77} />
-                <Divider type="vertical" />
-                <IconText type="message" key="message" text={77} />
+                <IconText type="message" key="message" text={article.articleComment} />
             </>
         )
 
@@ -169,68 +186,15 @@ class BbsDetail extends Component {
                     </Col>
                 </Row>
                 <Row gutter={24}>
-                    <Col xl={7} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
-                        <Menu onClick={handleClick} style={{ width: 256, float: 'right' }} mode="vertical">
-                            <SubMenu
-                                key="sub1"
-                                title={
-                                    <span>
-                                        <Icon type="mail" />
-                                        <span>今日话题</span>
-                                    </span>
-                                }
-                            >
-                            </SubMenu>
-                            <SubMenu
-                                key="sub2"
-                                title={
-                                    <span>
-                                        <Icon type="appstore" />
-                                        <span>最近更新</span>
-                                    </span>
-                                }
-                            >
-                            </SubMenu>
-                            <SubMenu
-                                key="sub3"
-                                title={
-                                    <span>
-                                        <Icon type="setting" />
-                                        <span>茶 · 知识</span>
-                                    </span>
-                                }
-                            >
-                            </SubMenu>
-                            <SubMenu
-                                key="sub4"
-                                title={
-                                    <span>
-                                        <Icon type="setting" />
-                                        <span>茶 · 文化</span>
-                                    </span>
-                                }
-                            >
-                            </SubMenu>
-                            <SubMenu
-                                key="sub5"
-                                title={
-                                    <span>
-                                        <Icon type="setting" />
-                                        <span>茶 · 传说</span>
-                                    </span>
-                                }
-                            >
-                            </SubMenu>
-                        </Menu>
-                    </Col>
-                    <Col xl={17} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
+                    <Col xl={24} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
                         <Card bordered={false} title={title} extra={extra}>
                             <Paragraph>
-                                中国是茶的故乡，不仅因为这里培植出了世界上第一株茶树，更因为茶已经成为一种文化，成为中国人文化和性格不可分割的重要组成部分。六大茶类怎么区分的呢？绿茶、白茶、黄茶、红茶、青茶、黑茶是不是用不同茶树的叶子做成不同茶呢？</Paragraph>
-                            <Paragraph>
-                                今天告诉你！其实是相同的一片叶子就可以做成六大茶类。
+                                {article.articleDetail}
                             </Paragraph>
-                            <img alt="" src={bbsdetail1} height="auto" width="761" />
+                            {/* <Paragraph> */}
+                                {/* 今天告诉你！其实是相同的一片叶子就可以做成六大茶类。
+                            </Paragraph>
+                            
                             <Title level={3}>绿茶：不发酵讲究新鲜</Title>
                             <Paragraph>
                                 绿茶的特点是鲜叶采摘后高温迅速灭掉其中酶类，抑制茶多酚氧化。所以绿茶具有“三绿”的特点：干茶绿，茶汤绿，冲泡后的叶底也是绿色的。
@@ -295,7 +259,7 @@ class BbsDetail extends Component {
                                     【最适合人群】
                                 </Text>
                                 去脂解腻效果强，适合肥胖、血糖高、血脂高、抽烟喝酒、便秘的人。由于性质温和，虚寒体质者较适合
-                            </Paragraph>
+                            </Paragraph> */}
                             <Divider />
                         </Card>
                         <Card bordered={false}>

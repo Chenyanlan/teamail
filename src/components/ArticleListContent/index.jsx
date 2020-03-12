@@ -11,12 +11,12 @@ const renderColor=()=>{
   return color;
 }
 
-const ArticleListContent = ({ data: { content, updatedAt, avatar, owner, href } }) => (
+const ArticleListContent = ({ data: { articleDetail, createTime, userAvatar, userName, href } }) => (
   <div className={styles.listContent}>
-    <div className={styles.description}>{content}</div>
+    <div className={styles.description}>{articleDetail}</div>
     <div className={styles.extra}>
-      <Avatar size="small" style={{ backgroundColor: '#87d068' }} icon="user" />
-      <a href={href}>{owner}</a> 发布于 <em>{moment(updatedAt).format('YYYY-MM-DD HH:mm')}</em>
+      <Avatar size="small" src={userAvatar} />
+      <a href={href}>{userName}</a> 发布于 <em>{moment(createTime).format('YYYY-MM-DD HH:mm')}</em>
     </div>
   </div>
 );

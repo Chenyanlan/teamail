@@ -1,8 +1,11 @@
 @import '~antd/es/style/themes/default.less';
 
 .listContent {
-  .description {
     max-width: 720px;
+  .description {
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
     line-height: 22px;
   }
   .extra {

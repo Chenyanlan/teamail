@@ -5,6 +5,7 @@ import Blank from '../account/setting/Blank';
 import styles from './AdminDetail.less';
 import WikiAdmin from './WikiAdmin';
 import UserAdmin from './UserAdmin';
+import BbsAdmin from './BbsAdmin';
 
 const { Item } = Menu;
 
@@ -83,7 +84,7 @@ class AdminDetail extends Component {
           case 'wiki':
             return <WikiAdmin />;
           case 'bbs':
-            return <Blank />;
+            return <BbsAdmin />;
           case 'mall':
             return <Blank />;
           case 'welcome':

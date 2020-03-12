@@ -1,3 +1,4 @@
+import { notification } from 'antd';
 import { queryCurrent, query as queryUsers, queryCurrentUser, queryUserList, modifyUser, removeUser } from '@/services/user';
 
 const UserModel = {
@@ -51,6 +52,31 @@ const UserModel = {
         payload: response,
       });
       console.log(response);
+       if (response.success === true) {
+            notification.success({
+                message: '成功',
+                description:
+                  '用户密码和权限修改成功',
+                onClick: () => {
+                  console.log('Notification Clicked!');
+                },
+              });
+          } else {
+            notification.error({
+                message: '失败',
+                description:
+                  '用户密码和权限修改失败',
+                onClick: () => {
+                  console.log('Notification Clicked!');
+                },
+              });
+          }
+      const response2 = yield call(queryUserList);
+      yield put({
+        type: 'quertUserList',
+        payload: response2,
+      })
+      console.log(response2);
     },
     *removeUser({ payload }, { call, put }) {
       const response = yield call(removeUser, payload);
