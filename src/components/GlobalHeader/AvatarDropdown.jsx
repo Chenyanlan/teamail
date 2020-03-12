@@ -6,7 +6,27 @@ import router from 'umi/router';
 import HeaderDropdown from '../HeaderDropdown';
 import styles from './index.less';
 
+@connect(({ user }) => ({
+  currentUser: user.currentUser,
+}))
 class AvatarDropdown extends React.Component {
+
+  // componentDidMount() {
+  //   this.getData();
+  // }
+
+  // getData = () =>{
+  //   const userId = localStorage.getItem('userId');
+  //   console.log(userId);
+  //   const { dispatch } = this.props;
+  //   dispatch({
+  //     type: 'user/fetchCurrentUser',
+  //     payload: {
+  //       userId,
+  //     },
+  //   })
+  // }
+
   onMenuClick = event => {
     console.log(event);
     const { key } = event;
@@ -30,7 +50,7 @@ class AvatarDropdown extends React.Component {
   };
 
   render() {
-    // console.log(this.props);
+    console.log(this.props);
     const {
       currentUser = {
         avatar: '',
@@ -64,11 +84,11 @@ class AvatarDropdown extends React.Component {
         </Menu.Item>
       </Menu>
     );
-    return currentUser && currentUser.name ? (
+    return currentUser && currentUser.userName ? (
       <HeaderDropdown overlay={menuHeaderDropdown}>
         <span className={`${styles.action} ${styles.account}`}>
-          <Avatar size="small" className={styles.avatar} src={currentUser.avatar} alt="avatar" />
-          <span className={styles.name}>{currentUser.name}</span>
+          <Avatar size="small" className={styles.avatar} src={currentUser.userAvatar} alt="avatar" />
+          <span className={styles.name}>{currentUser.userName}</span>
         </span>
       </HeaderDropdown>
     ) : (
@@ -83,6 +103,4 @@ class AvatarDropdown extends React.Component {
   }
 }
 
-export default connect(({ user }) => ({
-  currentUser: user.currentUser,
-}))(AvatarDropdown);
+export default AvatarDropdown;

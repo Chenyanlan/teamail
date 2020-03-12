@@ -25,9 +25,6 @@ class Bbs extends Component {
     const { dispatch } = this.props;
     dispatch({
       type: 'listSearchArticles/fetch',
-      payload: {
-        count: 5,
-      }
     })
   }
 
@@ -162,26 +159,6 @@ class Bbs extends Component {
                   <span>
                     <Icon type="setting" />
                     <span>茶 · 传说</span>
-                  </span>
-                }
-              >
-              </SubMenu>
-              <SubMenu
-                key="sub6"
-                title={
-                  <span>
-                    <Icon type="setting" />
-                    <span>绿茶</span>
-                  </span>
-                }
-              >
-              </SubMenu>
-              <SubMenu
-                key="sub7"
-                title={
-                  <span>
-                    <Icon type="setting" />
-                    <span>黑茶</span>
                   </span>
                 }
               >

@@ -82,6 +82,11 @@ export default {
           path: '/user/login',
           component: './user/login',
         },
+        {
+          name: 'login',
+          path: '/user/register',
+          component: './user/register',
+        },
       ],
     },
     {
@@ -219,11 +224,11 @@ export default {
   manifest: {
     basePath: '/',
   }, // chainWebpack: webpackPlugin,
-  proxy: {
-    '/api': {
-      target: 'http://rap2api.taobao.org/app/mock/228455',
-      changeOrigin: true,
-      pathRewrite: { '^/api': '/api' },
-    },
-  },
+  // proxy: {
+  //   '/api': {
+  //     target: 'http://rap2api.taobao.org/app/mock/228455',
+  //     changeOrigin: true,
+  //     pathRewrite: { '^/api': '/api' },
+  //   },
+  // },
 };

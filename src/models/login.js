@@ -1,8 +1,9 @@
 import { routerRedux } from 'dva/router';
 import { stringify } from 'querystring';
-import { fakeAccountLogin, getFakeCaptcha } from '@/services/login';
+import { fakeAccountLogin, AccountLogin } from '@/services/login';
 import { setAuthority } from '@/utils/authority';
 import { getPageQuery } from '@/utils/utils';
+
 const Model = {
   namespace: 'login',
   state: {
@@ -10,23 +11,24 @@ const Model = {
   },
   effects: {
     *login({ payload }, { call, put }) {
-      const response = yield call(fakeAccountLogin, payload);
+      const response = yield call(AccountLogin, payload);
       yield put({
         type: 'changeLoginStatus',
         payload: response,
       }); // Login successfully
-
+      console.log(response);
       if (response.status === 'ok') {
+        console.log('success');
         const urlParams = new URL(window.location.href);
         const params = getPageQuery();
         let { redirect } = params;
-
+        console.log(redirect);
         if (redirect) {
           const redirectUrlParams = new URL(redirect);
-
+          console.log(redirectUrlParams);
           if (redirectUrlParams.origin === urlParams.origin) {
             redirect = redirect.substr(urlParams.origin.length);
-
+            console.log(redirect);
             if (redirect.match(/^\/.*#/)) {
               redirect = redirect.substr(redirect.indexOf('#') + 1);
             }
@@ -38,10 +40,6 @@ const Model = {
 
         yield put(routerRedux.replace(redirect || '/'));
       }
-    },
-
-    *getCaptcha({ payload }, { call }) {
-      yield call(getFakeCaptcha, payload);
     },
 
     *logout(_, { put }) {
@@ -61,8 +59,14 @@ const Model = {
   },
   reducers: {
     changeLoginStatus(state, { payload }) {
-      setAuthority(payload.currentAuthority);
-      return { ...state, status: payload.status, type: payload.type };
+      console.log(payload);
+      if (payload.success === false) {
+        setAuthority('guest');
+        return { ...state, status: 'error', type: 'account' };
+      }
+        setAuthority(payload.list[0].userAuthority, payload.list[0].userName,payload.list[0].userId);
+        return { ...state, status: payload.status, type: payload.type };
+      // setAuthority(payload.currentAuthority);
     },
   },
 };

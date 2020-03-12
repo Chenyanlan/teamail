@@ -39,7 +39,7 @@ class AccountSetting extends Component {
     componentDidMount() {
         const { dispatch } = this.props;
         dispatch({
-            type: 'accountSettings/fetchCurrent',
+            type: 'accountSettings/fetchCurrentUser',
         });
         window.addEventListener('resize', this.resize);
         this.resize();
@@ -118,8 +118,8 @@ class AccountSetting extends Component {
 
     render() {
         console.log(this.props);
-        const {currentUser} = this.props;
-        if(!currentUser.userid){
+        const { currentUser } = this.props;
+        if(!currentUser.userId){
             return '';
         }
         const {mode,selectKey} = this.state;

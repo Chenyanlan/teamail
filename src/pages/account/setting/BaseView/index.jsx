@@ -3,21 +3,36 @@ import { FormattedMessage, formatMessage } from 'umi-plugin-react/locale';
 import { Button, Form, Input, Select, Upload, message } from 'antd';
 import { connect } from 'dva';
 import styles from './index.less';
-import GeographicView from './GeographicView';
-import avatar3 from '../../../../assets/avatar3.jpg';
+
 
 const FormItem = Form.Item;
 const { Option } = Select; // 头像组件 方便以后独立，增加裁剪之类的功能
 
+const props = {
+  name: 'files',
+  action: 'http://localhost:8082/demo/upload/uploadImg',
+  multiple: true,
+  onChange(info) {
+    if (info.file.status !== 'uploading') {
+      console.log(info.file, info.fileList);
+      localStorage.setItem('avatar', info.file.response[0].url);
+    }
+    if (info.file.status === 'done') {
+      message.success(`${info.file.name} 文件上传成功`);
+    } else if (info.file.status === 'error') {
+      message.error(`${info.file.name}文件上传失败`);
+    }
+  },
+};
 const AvatarView = ({ avatar }) => (
     <Fragment>
       <div className={styles.avatar_title}>
         <FormattedMessage id="accountsettings.basic.avatar" defaultMessage="Avatar" />
       </div>
       <div className={styles.avatar}>
-        <img src={avatar3} alt="avatar" />
+        <img src={avatar} alt="avatar" />
       </div>
-      <Upload fileList={[]}>
+      <Upload {...props}>
         <div className={styles.button_view}>
           <Button icon="upload">
             <FormattedMessage
@@ -29,40 +44,20 @@ const AvatarView = ({ avatar }) => (
       </Upload>
     </Fragment>
   );
-  
-  const validatorGeographic = (_, value, callback) => {
-    const { province, city } = value;
-  
-    if (!province.key) {
-      callback('Please input your province!');
-    }
-  
-    if (!city.key) {
-      callback('Please input your city!');
-    }
-  
-    callback();
-  };
-  
-  const validatorPhone = (rule, value, callback) => {
-    const values = value.split('-');
-  
-    if (!values[0]) {
-      callback('Please input your area code!');
-    }
-  
-    if (!values[1]) {
-      callback('Please input your phone number!');
-    }
-  
-    callback();
-  };
 
 @connect(({ accountSettings }) => ({
     currentUser: accountSettings.currentUser,
 }))
 class BaseView extends Component {
-    view = undefined;
+  view = undefined;
+
+  // eslint-disable-next-line no-shadow
+  constructor(props) {
+    super(props);
+    this.state = {
+      avatarUrl: '',
+    }
+  }
 
   componentDidMount() {
     this.setBaseInfo();
@@ -70,7 +65,7 @@ class BaseView extends Component {
 
   setBaseInfo = () => {
     const { currentUser, form } = this.props;
-
+    console.log(this.props);
     if (currentUser) {
       Object.keys(form.getFieldsValue()).forEach(key => {
         const obj = {};
@@ -84,12 +79,13 @@ class BaseView extends Component {
     const { currentUser } = this.props;
 
     if (currentUser) {
-      if (currentUser.avatar) {
-        return currentUser.avatar;
+      if (currentUser.userAvatar) {
+        return currentUser.userAvatar;
       }
-
-      const url = 'https://gw.alipayobjects.com/zos/rmsportal/BiazfanxmamNRoxxVxka.png';
-      return url;
+      // if (localStorage.getItem('avatar')) {
+      //   const url = localStorage.getItem('avatar');
+      //   return url;
+      // }
     }
 
     return '';
@@ -99,16 +95,27 @@ class BaseView extends Component {
     this.view = ref;
   };
 
+  flashAllPage = () => {
+    window.history.go(0);
+  }
+
   handlerSubmit = event => {
     event.preventDefault();
     const { form } = this.props;
-    form.validateFields(err => {
+    console.log(this.props);
+    form.validateFields((err, value) => {
       if (!err) {
-        message.success(
-          formatMessage({
-            id: 'accountsettings.basic.update.success',
-          }),
-        );
+        const { currentUser } = this.props;
+        value.userId = currentUser.userId;
+        value.userAvatar = localStorage.getItem('avatar');
+        console.log(value);
+        const { dispatch } = this.props;
+        dispatch({
+          type: 'accountSettings/modifyUser',
+          payload: value,
+        })
+        message.success('数据更新成功');
+        this.flashAllPage();
       }
     });
   };
@@ -121,29 +128,10 @@ class BaseView extends Component {
               <Form layout="vertical" hideRequiredMark>
                 <FormItem
                   label={formatMessage({
-                    id: 'accountsettings.basic.email',
-                  })}
-                >
-                  {getFieldDecorator('email', {
-                    rules: [
-                      {
-                        required: true,
-                        message: formatMessage(
-                          {
-                            id: 'accountsettings.basic.email-message',
-                          },
-                          {},
-                        ),
-                      },
-                    ],
-                  })(<Input />)}
-                </FormItem>
-                <FormItem
-                  label={formatMessage({
                     id: 'accountsettings.basic.nickname',
                   })}
                 >
-                  {getFieldDecorator('name', {
+                  {getFieldDecorator('userName', {
                     rules: [
                       {
                         required: true,
@@ -162,7 +150,7 @@ class BaseView extends Component {
                     id: 'accountsettings.basic.profile',
                   })}
                 >
-                  {getFieldDecorator('profile', {
+                  {getFieldDecorator('userSignature', {
                     rules: [
                       {
                         required: true,
@@ -185,59 +173,10 @@ class BaseView extends Component {
                 </FormItem>
                 <FormItem
                   label={formatMessage({
-                    id: 'accountsettings.basic.country',
-                  })}
-                >
-                  {getFieldDecorator('country', {
-                    rules: [
-                      {
-                        required: true,
-                        message: formatMessage(
-                          {
-                            id: 'accountsettings.basic.country-message',
-                          },
-                          {},
-                        ),
-                      },
-                    ],
-                  })(
-                    <Select
-                      style={{
-                        maxWidth: 220,
-                      }}
-                    >
-                      <Option value="China">中国</Option>
-                    </Select>,
-                  )}
-                </FormItem>
-                <FormItem
-                  label={formatMessage({
-                    id: 'accountsettings.basic.geographic',
-                  })}
-                >
-                  {getFieldDecorator('geographic', {
-                    rules: [
-                      {
-                        required: true,
-                        message: formatMessage(
-                          {
-                            id: 'accountsettings.basic.geographic-message',
-                          },
-                          {},
-                        ),
-                      },
-                      {
-                        validator: validatorGeographic,
-                      },
-                    ],
-                  })(<GeographicView />)}
-                </FormItem>
-                <FormItem
-                  label={formatMessage({
                     id: 'accountsettings.basic.address',
                   })}
                 >
-                  {getFieldDecorator('address', {
+                  {getFieldDecorator('userPlace', {
                     rules: [
                       {
                         required: true,
@@ -256,7 +195,7 @@ class BaseView extends Component {
                     id: 'accountsettings.basic.phone',
                   })}
                 >
-                  {getFieldDecorator('phone', {
+                  {getFieldDecorator('userTel', {
                     rules: [
                       {
                         required: true,
@@ -266,9 +205,6 @@ class BaseView extends Component {
                           },
                           {},
                         ),
-                      },
-                      {
-                        validator: validatorPhone,
                       },
                     ],
                   })(<Input />)}
@@ -282,6 +218,7 @@ class BaseView extends Component {
               </Form>
             </div>
             <div className={styles.right}>
+              {/* <UploadAvatar /> */}
               <AvatarView avatar={this.getAvatarURL()} />
             </div>
           </div>

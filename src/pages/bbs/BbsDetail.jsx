@@ -221,26 +221,6 @@ class BbsDetail extends Component {
                                 }
                             >
                             </SubMenu>
-                            <SubMenu
-                                key="sub6"
-                                title={
-                                    <span>
-                                        <Icon type="setting" />
-                                        <span>绿茶</span>
-                                    </span>
-                                }
-                            >
-                            </SubMenu>
-                            <SubMenu
-                                key="sub7"
-                                title={
-                                    <span>
-                                        <Icon type="setting" />
-                                        <span>黑茶</span>
-                                    </span>
-                                }
-                            >
-                            </SubMenu>
                         </Menu>
                     </Col>
                     <Col xl={17} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>

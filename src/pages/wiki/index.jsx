@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Layout, Menu, Icon } from 'antd';
+import {connect} from 'dva';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import { GridContent, PageHeaderWrapper } from '@ant-design/pro-layout';
 import Detail from './Detail';
@@ -8,6 +9,9 @@ import styles from './index.less';
 
 const { Item } = Menu;
 
+@connect(({ listWiki }) => ({
+  listWiki,
+}))
 class WikiPage extends Component {
     constructor(props) {
         super(props);
@@ -31,6 +35,13 @@ class WikiPage extends Component {
     componentDidMount() {
         window.addEventListener('resize', this.resize);
         this.resize();
+        const { dispatch } = this.props;
+        dispatch({
+            type: 'listWiki/wikiDetail',
+            payload: {
+                wikiId: 11,
+            },
+        });
     }
 
     componentWillUnmount() {
@@ -82,27 +93,70 @@ class WikiPage extends Component {
 
       renderChildren = () => {
         const { selectKey } = this.state;
+        const { dispatch } = this.props;
         switch (selectKey) {
           case 'greenTea':
-            return <Detail />;
+            dispatch({
+                type: 'listWiki/wikiDetail',
+                payload: {
+                    wikiId: 11,
+                },
+            });
+            return <Detail data={this.props.listWiki.detailResult}/>;
 
           case 'redTea':
-            return <Blank />;
+            dispatch({
+                type: 'listWiki/wikiDetail',
+                payload: {
+                    wikiId: 12,
+                },
+            });
+            return <Blank data={this.props.listWiki.detailResult}/>;
 
           case 'blackTea':
-            return <Detail />;
+            dispatch({
+                type: 'listWiki/wikiDetail',
+                payload: {
+                    wikiId: 13,
+                },
+            });
+            return <Detail data={this.props.listWiki.detailResult}/>;
 
           case 'yellowTea':
-            return <Detail />;
+            dispatch({
+              type: 'listWiki/wikiDetail',
+              payload: {
+                  wikiId: 14,
+              },
+          });
+            return <Detail data={this.props.listWiki.detailResult}/>;
 
           case 'wulongTea':
-            return <Detail />;
+            dispatch({
+              type: 'listWiki/wikiDetail',
+              payload: {
+                  wikiId: 15,
+              },
+          });
+            return <Detail data={this.props.listWiki.detailResult}/>;
 
           case 'whiteTea':
-            return <Detail />;
+            dispatch({
+              type: 'listWiki/wikiDetail',
+              payload: {
+                  wikiId: 16,
+              },
+          });
+            return <Detail data={this.props.listWiki.detailResult}/>;
 
           case 'scentedTea':
-            return <Detail />;
+            dispatch({
+              type: 'listWiki/wikiDetail',
+              payload: {
+                  wikiId: 17,
+              },
+          });
+            return <Detail data={this.props.listWiki.detailResult} />;
 
           default:
             break;

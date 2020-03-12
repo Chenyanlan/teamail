@@ -7,29 +7,31 @@ const Model={
         list:[],
     },
     effects:{
-        *fetchCurrent(_,{call,put}){
-            const response = yield call(queryCurrent);
+        *fetchCurrent({ payload }, { call, put }) {
+            const response = yield call(queryCurrent, payload);
             yield put({
-                type:'saveCurrentUser',
-                payload:response,
+                type: 'saveCurrentUser',
+                payload: response,
             });
+            console.log(response);
         },
-        *fetch({payload},{call,put}){
-            const response = yield call(queryFakeList,payload);
+        *fetch({ payload }, { call, put }) {
+            const response = yield call(queryFakeList, payload);
             yield put({
-                type:'queryList',
-                payload:Array.isArray(response) ? response : [],
+                type: 'queryList',
+                payload: Array.isArray(response) ? response : [],
             });
         },
     },
     reducers:{
-        saveCurrentUser(state,action){
-            return {...state,currentUser:action.payload||{}};
+        saveCurrentUser(state, action) {
+            console.log(action.payload);
+            return { ...state, currentUser: action.payload.user || {} };
         },
-        queryList(state,action){
-            return {...state,list:action.payload}
-        }
-    }
+        queryList(state, action) {
+            return { ...state, list: action.payload }
+        },
+    },
 
 }
 export default Model;

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Card, Typography, Alert, Icon } from 'antd';
+import { Card, Typography, Alert, Icon} from 'antd';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
+import AdminDetail from './admin/AdminDetail';
 
 // 管理员单独界面
 export default () => (
@@ -16,5 +17,6 @@ export default () => (
         <Icon type="heart" theme="twoTone" twoToneColor="#eb2f96" /> Admin
       </Typography.Title>
     </Card>
+    <AdminDetail />
   </PageHeaderWrapper>
 );

@@ -9,7 +9,7 @@ import { Link } from 'umi';
 
 const operationTablList = [
     {
-        key:'articles',
+        key: 'articles',
         tab:(
             <span>
                 文章{' '}
@@ -22,7 +22,7 @@ const operationTablList = [
         ),
     },
     {
-        key:'collection',
+        key: 'collection',
         tab:(
             <span>
                 收藏{' '}
@@ -34,28 +34,15 @@ const operationTablList = [
             </span>
         ),
     },
-    // {
-    //     key:'articles',
-    //     tab:(
-    //         <span>
-    //             文章{' '}
-    //             <span
-    //                 style={{fontSize:14}}
-    //             >
-    //                 (8)
-    //             </span>
-    //         </span>
-    //     ),
-    // },
 ]
-@connect(({loading,accountCenter})=>({
-    currentUser:accountCenter.currentUser,
-    currentUserLoading:loading.effects['accountCenter/fetchCurrent']
+@connect(({ loading, accountCenter }) => ({
+    currentUser: accountCenter.currentUser,
+    currentUserLoading: loading.effects['accountCenter/fetchCurrent'],
 }))
-class AccountCenter extends Component{
+class AccountCenter extends Component {
     input = undefined;
 
-    constructor(props){
+    constructor(props) {
         super(props);
         this.state={
             // dataLoading:false,
@@ -66,13 +53,18 @@ class AccountCenter extends Component{
         }
     }
 
-    componentDidMount(){
-        const {dispatch} = this.props;
+    componentDidMount() {
+        const userId = localStorage.getItem('userId');
+        console.log(userId);
+        const { dispatch } = this.props;
         dispatch({
-            type:'accountCenter/fetchCurrent',
+            type: 'accountCenter/fetchCurrent',
+            payload: {
+                userId,
+            },
         });
         dispatch({
-            type:'accountCenter/fetch'
+            type: 'accountCenter/fetch',
         })
     }
 
@@ -145,10 +137,10 @@ class AccountCenter extends Component{
         return null;
       };
 
-    render(){
+    render() {
         // console.log(this.props);
         const { newTags, inputVisible, inputValue, tabKey } = this.state;
-        const {currentUser,currentUserLoading} = this.props;
+        const {currentUser, currentUserLoading } = this.props;
         const dataLoading = currentUserLoading || !(currentUser && Object.keys(currentUser).length);
         return (
             <GridContent>
@@ -158,9 +150,10 @@ class AccountCenter extends Component{
                             {!dataLoading && (
                                 <div>
                                     <div className={styles.avatarHolder}>
-                                         <img src={avatar} alt=""/>
-                                         <div className={styles.name}>{currentUser.name}</div>
-                                        <div>本质是一个DD，在所有梦中沉浮</div>
+                                         <img src={currentUser.userAvatar} alt=""/>
+                                         <div className={styles.name}>{currentUser.userName}</div>
+                                         <Divider dashed />
+                                        <div>{currentUser.userSignature}</div>
                                     </div>
                                     {/* <div className={styles.detail}>
                                         <p>
@@ -177,7 +170,7 @@ class AccountCenter extends Component{
                                             {currentUser.geographic.city.label}
                                         </p>
                                     </div> */}
-                                    <Divider dashed />
+                                    {/* <Divider dashed />
                                     <div className={styles.tags}>
                                         <div className={styles.tagsTile}>标签</div>
                                         {currentUser.tags.concat(newTags).map(item=>
@@ -188,7 +181,7 @@ class AccountCenter extends Component{
                                                 ref={ref => this.saveInputRef(ref)}
                                                 type="text"
                                                 size="small"
-                                                style={{width:78,}}
+                                                style={{ width: 78 }}
                                                 value={inputValue}
                                                 onChange={this.handleInputChange}
                                                 onBlur = {this.handleInputConfirm}
@@ -203,7 +196,7 @@ class AccountCenter extends Component{
                                                 <Icon type="plus" />
                                             </Tag>
                                         )}
-                                    </div>
+                                    </div> */}
                                     {/* <Divider dashed style={{marginTop:16,}} /> */}
                                     {/* <div className={styles.team}>
                                         <div className={styles.teamTitle}>团队</div>

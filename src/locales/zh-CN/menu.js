@@ -3,6 +3,7 @@ export default {
   'menu.bbs': '茶 · 论坛',
   'menu.mall': '茶 · 商城',
   'menu.wiki': '茶 · 百科',
+  'menu.user': '用户管理',
   'menu.bbsdetail': '论坛详情',
   'menu.malldetail': '商品详情',
   'menu.mallpaypal': '付款页面',

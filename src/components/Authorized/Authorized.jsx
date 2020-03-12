@@ -14,6 +14,7 @@ const Authorized = ({
   ),
 }) => {
   const childrenRender = typeof children === 'undefined' ? null : children;
+  console.log(authority, children)
   const dom = check(authority, childrenRender, noMatch);
   return <>{dom}</>;
 };
