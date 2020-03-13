@@ -92,8 +92,8 @@ class Articles extends Component {
                     <List.Item
                         key={item.articleId}
                         actions={[
-                            <IconText key="star" type="star-o" text={item.articleStar} />,
-                            <IconText key="message" type="message" text={item.articleComment} />,
+                            // <IconText key="star" type="star-o" text={item.articleStar} />,
+                            // <IconText key="message" type="message" text={item.articleComment} />,
                             <a key="list-loadmore-edit" onClick={this.showModal.bind(this, item)}>修改</a>,
                         <Popconfirm
                             title="你确定删除该文章?"

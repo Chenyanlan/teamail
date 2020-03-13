@@ -41,3 +41,27 @@ export async function addArticle(params) {
       data: params,
     });
 }
+
+export async function getCommentByAuthorId(params) {
+    return request('http://localhost:8082/demo/admin/getcommentbyauthorid', {
+        params,
+    })
+}
+
+export async function removeComment(params) {
+    return request('http://localhost:8082/demo/admin/removecomment', {
+        params,
+    })
+}
+
+export async function getStarArticleByUserID(params) {
+    return request('http://localhost:8082/demo/admin/getstararticlebyuserid', {
+        params,
+    })
+}
+
+export async function removeStar(params) {
+    return request('http://localhost:8082/demo/admin/removestar', {
+        params,
+    })
+}

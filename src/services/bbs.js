@@ -56,3 +56,39 @@ export async function getArticleByToday(params) {
         params,
     })
 }
+
+export async function getCommentsByArticleId(params) {
+    return request('http://localhost:8082/demo/admin/getcommentbyarticleid', {
+        params,
+    })
+}
+export async function addComment(params) {
+    return request('http://localhost:8082/demo/admin/addcomment', {
+      method: 'POST',
+      data: params,
+    });
+}
+
+export async function getStarByUserArticleId(params) {
+    return request('http://localhost:8082/demo/admin/getstarbyuserarticleid', {
+        params,
+    })
+}
+export async function addStar(params) {
+    return request('http://localhost:8082/demo/admin/addstar', {
+        method: 'POST',
+        data: params,
+    })
+}
+
+export async function changeStar(params) {
+    return request('http://localhost:8082/demo/admin/changestar', {
+        params,
+    })
+}
+
+export async function getStarByArticleId(params) {
+    return request('http://localhost:8082/demo/admin/getstarbyarticleid', {
+        params,
+    })
+}

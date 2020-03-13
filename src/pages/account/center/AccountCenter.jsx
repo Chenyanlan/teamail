@@ -5,6 +5,8 @@ import { GridContent } from '@ant-design/pro-layout';
 import styles from './AccountCenter.less';
 import Articles from './Articles/Articles';
 import ModifyArticle from '../../../components/FormComponents/ModifyArticle';
+import Comments from './Comments/Comments';
+import Collections from './Collections/Collections';
 import { Link } from 'umi';
 
 const operationTablList = [
@@ -21,6 +23,14 @@ const operationTablList = [
         tab: (
             <span>
                 收藏
+            </span>
+        ),
+    },
+    {
+        key: 'comments',
+        tab: (
+            <span>
+                评论
             </span>
         ),
     },
@@ -116,12 +126,16 @@ class AccountCenter extends Component {
 
       renderChildrenByTabKey = tabKey => {
         if (tabKey === 'collection') {
-            return <Articles />;
+            return <Collections />;
         }
 
         if (tabKey === 'articles') {
           return <Articles />;
         }
+
+        if (tabKey === 'comments') {
+            return <Comments />;
+          }
         return null;
       };
 

@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import { getFakeList, queryFakeList, queryArticleList, queryArticleListByAuthorId, queryArticleListByPlate, removeArticle, modifyArticle, getArticleById, getArticleByTime, getArticleByToday } from '../services/bbs';
+import { getFakeList, queryFakeList, queryArticleList, queryArticleListByAuthorId, queryArticleListByPlate, removeArticle, modifyArticle, getArticleById, getArticleByTime, getArticleByToday, getCommentsByArticleId, addComment, getStarByUserArticleId, addStar, changeStar, getStarByArticleId } from '../services/bbs';
 
 
 const Model = {
@@ -14,6 +14,9 @@ const Model = {
         article: {},
         nearList: [],
         todayList: [],
+        comments: {},
+        starLists: {},
+        star: {},
     },
     effects: {
         *fetch({ payload }, { call, put }) {
@@ -66,8 +69,7 @@ const Model = {
             });
             console.log(response);
         },
-
-        *appendFetch({payload},{call,put}) {
+        *appendFetch({ payload }, { call, put }) {
             const response = yield call(getFakeList,payload);
             yield put({
                 type:'appendList',
@@ -139,6 +141,142 @@ const Model = {
             })
             console.log(response);
         },
+        *getCommentByArticleId({ payload }, { call, put }) {
+            const response = yield call(getCommentsByArticleId, payload);
+            yield put({
+                type: 'getComments',
+                payload: JSON.stringify(response) === '{}' ? {list:[],total:0} : response,
+            })
+            console.log(response);
+        },
+        *addComment({ payload },{ call, put }) {
+            const response = yield call(addComment, payload);
+            yield put({
+                type: 'modifyResult',
+                payload:response,
+            })
+            console.log(response);
+            if (response.success === true) {
+                notification.success({
+                message: '成功',
+                description:
+                    '评论添加成功',
+                onClick: () => {
+                    console.log('Notification Clicked!');
+                },
+                });
+            } else {
+                notification.error({
+                    message: '失败',
+                    description:
+                    '评论添加失败',
+                    onClick: () => {
+                    console.log('Notification Clicked!');
+                    },
+                });
+            }
+            const articleId = localStorage.getItem('articleId');
+            const data = {
+                commentArticleId: articleId,
+            }
+            const response2 = yield call(getCommentsByArticleId, data);
+            yield put({
+                type: 'getComments',
+                payload: response2,
+            })
+            console.log(response2);
+        },
+        *getStars({ payload }, { call, put }) {
+            const response = yield call(getStarByArticleId, payload);
+            yield put({
+                type: 'getStar',
+                payload: response,
+            })
+            console.log(response);
+        },
+        *getStarByUserArticleId({ payload }, { call, put }) {
+            const response = yield call(getStarByUserArticleId, payload);
+            yield put({
+                type: 'getStarById',
+                payload: response,
+            })
+            console.log(response);
+            console.log(payload);
+            if (response.total > 0) {
+                if (response.list[0].starIFYes === 0) {
+                    const response2 = yield call(changeStar, payload);
+                    yield put({
+                        type: 'modifyResult',
+                        payload: response2,
+                    })
+                    console.log(response2)
+                    if (response2.success === true) {
+                        notification.success({
+                            message: '成功',
+                            description:
+                                '收藏成功',
+                            onClick: () => {
+                                console.log('Notification Clicked!');
+                            },
+                            });
+                    } else {
+                        notification.error({
+                            message: '失败',
+                            description:
+                                '收藏失败',
+                            onClick: () => {
+                                console.log('Notification Clicked!');
+                            },
+                        });
+                    }
+                } else {
+                    notification.warning({
+                        message: '注意',
+                        description:
+                            '该文章已收藏',
+                        onClick: () => {
+                            console.log('Notification Clicked!');
+                        },
+                    });
+                }
+                
+            } else {
+                const response2 = yield call(addStar, payload);
+                yield put({
+                    type: 'modifyResult',
+                    payload: response2,
+                })
+                console.log(response2);
+                if (response2.success === true) {
+                    notification.success({
+                        message: '成功',
+                        description:
+                            '收藏成功',
+                        onClick: () => {
+                            console.log('Notification Clicked!');
+                        },
+                        });
+                } else {
+                    notification.error({
+                        message: '失败',
+                        description:
+                            '收藏失败',
+                        onClick: () => {
+                            console.log('Notification Clicked!');
+                        },
+                        });
+                }
+            }
+            const data = {
+                starArticleId: payload.starArticleId,
+            }
+            const response3 = yield call(getStarByArticleId, data);
+            yield put({
+                type: 'getStar',
+                payload: response3,
+            })
+            console.log(response3);
+        },
     },
     reducers: {
         queryList(state, action) {
@@ -167,6 +305,15 @@ const Model = {
         },
         getArticleToday(state, action) {
             return { ...state, todayList: action.payload.list }
+        },
+        getComments(state, action) {
+            return { ...state, comments: action.payload }
+        },
+        getStar(state, action) {
+            return { ...state, starLists: action.payload }
+        },
+        getStarById(state, action) {
+            return { ...state, star: action.payload }
         },
     },
 }

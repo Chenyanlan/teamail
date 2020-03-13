@@ -32,10 +32,11 @@ class Articles extends Component {
                 renderItem={item => (
                     <List.Item
                         key={item.articleId}
-                        actions={[
-                            <IconText key="star" type="star-o" text={item.articleStar} />,
-                            <IconText key="message" type="message" text={item.articleComment} />,
-                        ]}>
+                        // actions={[
+                        //     <IconText key="star" type="star-o" text={item.articleStar} />,
+                        //     <IconText key="message" type="message" text={item.articleComment} />,
+                        // ]}>
+                            >
                         <List.Item.Meta
                             title={
                                 <a className={styles.listItemMetaTile} href={`../bbs/${item.articleId}`}>
