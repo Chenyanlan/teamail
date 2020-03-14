@@ -122,7 +122,7 @@ class WikiPage extends Component {
             });
             return <Detail data={this.props.listWiki.detailResult}/>;
 
-          case 'yellowTea':
+          case 'whiteTea':
             dispatch({
               type: 'listWiki/wikiDetail',
               payload: {
@@ -140,7 +140,7 @@ class WikiPage extends Component {
           });
             return <Detail data={this.props.listWiki.detailResult}/>;
 
-          case 'whiteTea':
+          case 'yellowTea':
             dispatch({
               type: 'listWiki/wikiDetail',
               payload: {

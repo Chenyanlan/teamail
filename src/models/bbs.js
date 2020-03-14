@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import { getFakeList, queryFakeList, queryArticleList, queryArticleListByAuthorId, queryArticleListByPlate, removeArticle, modifyArticle, getArticleById, getArticleByTime, getArticleByToday, getCommentsByArticleId, addComment, getStarByUserArticleId, addStar, changeStar, getStarByArticleId } from '../services/bbs';
+import { getFakeList, queryFakeList, queryArticleList, queryArticleListByAuthorId, queryArticleListByPlate, removeArticle, modifyArticle, getArticleById, getArticleByTime, getArticleByToday, getCommentsByArticleId, addComment, getStarByUserArticleId, addStar, changeStar, getStarByArticleId, removeComment } from '../services/bbs';
 
 
 const Model = {
@@ -276,6 +276,42 @@ const Model = {
                 payload: response3,
             })
             console.log(response3);
+        },
+        *removeComment({ payload }, { call, put }) {
+            const response = yield call(removeComment, payload);
+            yield put({
+                type: 'modifyResult',
+                payload: response,
+            })
+            console.log(response);
+            if (response.success === true) {
+                notification.success({
+                message: '成功',
+                description:
+                    '评论删除成功',
+                onClick: () => {
+                    console.log('Notification Clicked!');
+                },
+                });
+            } else {
+                notification.error({
+                    message: '失败',
+                    description:
+                    '评论删除失败',
+                    onClick: () => {
+                    console.log('Notification Clicked!');
+                    },
+                });
+            }
+            const data = {
+                commentArticleId: localStorage.getItem('adminArticleId'),
+            }
+            const response2 = yield call(getCommentsByArticleId,data);
+            yield put({
+                type: 'getComments',
+                payload: JSON.stringify(response2) === '{}' ? {list:[],total:0} : response2,
+            })
+            console.log(response2);
         },
     },
     reducers: {

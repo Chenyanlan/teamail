@@ -92,3 +92,8 @@ export async function getStarByArticleId(params) {
         params,
     })
 }
+export async function removeComment(params) {
+    return request('http://localhost:8082/demo/admin/removecomment', {
+        params,
+    })
+}

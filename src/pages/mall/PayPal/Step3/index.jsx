@@ -36,7 +36,7 @@ const Step3 = props => {
   const extra = (
     <>
       <Button type="primary" onClick={onFinish}>
-        再转一笔
+        再来一单
       </Button>
       {/* <Button>查看账单</Button> */}
     </>

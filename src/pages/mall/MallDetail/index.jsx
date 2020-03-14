@@ -83,7 +83,11 @@ class MallDetail extends Component {
     }
 
     render() {
-
+        const displayList = [
+            {   pictureId:1, pictureDetail: malldetail1,},
+            {   pictureId:2, pictureDetail: malldetail2,},
+            {   pictureId:3, pictureDetail: malldetail3,}
+        ]
         return (
             <PageHeaderWrapper
                 className={styles.pageHeader}
@@ -91,7 +95,16 @@ class MallDetail extends Component {
                 <Row gutter={24}>
                     <Col xl={7} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
                         <Carousel autoplay>
-                            <div className={styles.mallpictrue}>
+                            {
+                                displayList.map(item=>{
+                                    return (
+                                        <div className={styles.mallpictrue}>
+                                            <img alt="商品详情图片1" src={item.pictureDetail} />
+                                        </div>
+                                    )
+                                })
+                            }
+                            {/* <div className={styles.mallpictrue}>
                                 <img alt="商品详情图片1" src={malldetail1} />
                             </div>
                             <div className={styles.mallpictrue}>
@@ -99,7 +112,7 @@ class MallDetail extends Component {
                             </div>
                             <div className={styles.mallpictrue}>
                                 <img alt="商品详情图片3" src={malldetail3} />
-                            </div>
+                            </div> */}
                         </Carousel>
                     </Col>
                     <Col xl={17} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
@@ -173,7 +186,7 @@ class MallDetail extends Component {
                                     <img alt="商品详情展示" src={malldetail6} />
                                 </Card>
                             </TabPane>
-                            <TabPane
+                            {/* <TabPane
                                 tab={<span><Icon type="ordered-list" />累计评价</span>}
                                 key="2"
                             >
@@ -190,7 +203,7 @@ class MallDetail extends Component {
                                         </List.Item>
                                     )}
                                 />
-                            </TabPane>
+                            </TabPane> */}
                         </Tabs>
                     </Card>
                 </Row>

@@ -2,10 +2,7 @@ import React from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
 import {connect} from 'dva';
 import moment from 'moment';
-import { Card, Col, Form, List, Row, Select, Typography,Button,Divider } from 'antd';
-import  StandardFormRow from '../../components/StandardFormRow';
-import TagSelect from '../../components/TagSelect';
-import AvatarList from '../../components/AvatarList';
+import { Card, Col, Form, List, Row, Select, Typography,Button,Divider,Radio  } from 'antd';
 import square7 from '../../assets/square7.jpg';
 import square8 from '../../assets/square8.jpg';
 import square9 from '../../assets/square9.jpg';
@@ -40,7 +37,16 @@ const list2 = [
 }))
 class Mall extends React.Component {
 
-  componentDidMount(){
+  constructor(props) {
+    super(props);
+    this.state = {
+      value1: '全部',
+      value2: '全部',
+      value3: '全部',
+    }
+  }
+
+  componentDidMount() {
     const {dispatch} = this.props;
     dispatch({
       type: 'listSearchArticles/fetch2',
@@ -50,7 +56,32 @@ class Mall extends React.Component {
     })
   }
 
-  
+  onChange1 = e => {
+    console.log('radio1 checked', e.target.value);
+    this.setState({
+      value1: e.target.value,
+      value2: '全部',
+      value3: '全部',
+    });
+  };
+
+  onChange2 = e => {
+    console.log('radio2 checked', e.target.value);
+    this.setState({
+      value2: e.target.value,
+      value1: '全部',
+      value3: '全部',
+    });
+  };
+
+  onChange3 = e => {
+    console.log('radio3 checked', e.target.value);
+    this.setState({
+      value3: e.target.value,
+      value1: '全部',
+      value2: '全部',
+    });
+  };
 
   render() {
 
@@ -83,17 +114,17 @@ class Mall extends React.Component {
           xs: 1,
         }}
         dataSource={list2}
-        loadMore={
-        <div
-          style={{
-            textAlign: 'center',
-            marginTop: 12,
-            height: 32,
-            lineHeight: '32px',
-          }}
-        >
-          <Button onClick={this.onLoadMore}>加载更多</Button>
-        </div>}
+        // loadMore={
+        // <div
+        //   style={{
+        //     textAlign: 'center',
+        //     marginTop: 12,
+        //     height: 32,
+        //     lineHeight: '32px',
+        //   }}
+        // >
+        //   <Button onClick={this.onLoadMore}>加载更多</Button>
+        // </div>}
         renderItem={item=>(
           <List.Item>
             <Card className={styles.card} hoverable
@@ -122,75 +153,47 @@ class Mall extends React.Component {
     return (
       <PageHeaderWrapper>
         <Card bordered={false}>
-          <Form layout="inline">
-            <StandardFormRow title="分类" block style={{paddingBottom:11}}>
-                <FormItem>
-                  {getFieldDecorator('category')(
-                    <TagSelect expandable>
-                      <TagSelect.Option value="cat1">绿茶</TagSelect.Option>
-                      <TagSelect.Option value="cat2">红茶</TagSelect.Option>
-                      <TagSelect.Option value="cat3">黑茶</TagSelect.Option>
-                      <TagSelect.Option value="cat4">白茶</TagSelect.Option>
-                      <TagSelect.Option value="cat5">黄茶</TagSelect.Option>
-                      <TagSelect.Option value="cat6">乌龙茶</TagSelect.Option>
-                      <TagSelect.Option value="cat7">花茶</TagSelect.Option>
-                      <TagSelect.Option value="cat8">茶宠</TagSelect.Option>
-                      <TagSelect.Option value="cat9">龙井</TagSelect.Option>
-                      <TagSelect.Option value="cat10">茶具</TagSelect.Option>
-                      <TagSelect.Option value="cat11">紫砂陶</TagSelect.Option>
-                      <TagSelect.Option value="cat12">陶瓷</TagSelect.Option>
-                    </TagSelect>,
-                  )}
-                </FormItem>
-            </StandardFormRow>
-            <StandardFormRow title="十大名茶" block style={{paddingBottom:11}}>
-                <FormItem>
-                  {getFieldDecorator('famousTea')(
-                    <TagSelect expandable>
-                      <TagSelect.Option value="cat1">西湖龙井</TagSelect.Option>
-                      <TagSelect.Option value="cat2">江苏碧螺春</TagSelect.Option>
-                      <TagSelect.Option value="cat3">安徽毛峰</TagSelect.Option>
-                      <TagSelect.Option value="cat4">安徽瓜片</TagSelect.Option>
-                      <TagSelect.Option value="cat5">福建银针</TagSelect.Option>
-                      <TagSelect.Option value="cat6">信阳毛尖</TagSelect.Option>
-                      <TagSelect.Option value="cat7">安徽祁门红</TagSelect.Option>
-                      <TagSelect.Option value="cat8">都匀毛尖</TagSelect.Option>
-                      <TagSelect.Option value="cat9">武夷岩茶</TagSelect.Option>
-                      <TagSelect.Option value="cat10">福建铁观音</TagSelect.Option>
-                    </TagSelect>,
-                  )}
-                </FormItem>
-            </StandardFormRow>
-            <StandardFormRow title="价格" block style={{paddingBottom:11}}>
-                <FormItem>
-                  {getFieldDecorator('filter')(
-                    <TagSelect expandable>
-                      <TagSelect.Option value="cat1">100元以下</TagSelect.Option>
-                      <TagSelect.Option value="cat2">100~200元</TagSelect.Option>
-                      <TagSelect.Option value="cat3">200~300元</TagSelect.Option>
-                      <TagSelect.Option value="cat4">300~400元</TagSelect.Option>
-                      <TagSelect.Option value="cat5">400~500元</TagSelect.Option>
-                      <TagSelect.Option value="cat6">500~1000元</TagSelect.Option>
-                      <TagSelect.Option value="cat7">1000元以上</TagSelect.Option>
-                    </TagSelect>,
-                  )}
-                </FormItem>
-            </StandardFormRow>
-            <StandardFormRow title="产地" block style={{paddingBottom:11}}>
-                <FormItem>
-                  {getFieldDecorator('place')(
-                    <TagSelect expandable>
-                      <TagSelect.Option value="cat1">杭州</TagSelect.Option>
-                      <TagSelect.Option value="cat2">安徽</TagSelect.Option>
-                      <TagSelect.Option value="cat3">祁门</TagSelect.Option>
-                      <TagSelect.Option value="cat4">江苏</TagSelect.Option>
-                      <TagSelect.Option value="cat5">福建</TagSelect.Option>
-                      <TagSelect.Option value="cat6">武夷山</TagSelect.Option>
-                    </TagSelect>,
-                  )}
-                </FormItem>
-            </StandardFormRow>
-          </Form>
+        <div>
+          <span>分类：</span>
+          <Radio.Group buttonStyle="solid" value={this.state.value1} onChange={this.onChange1}>
+            <Radio.Button value="全部">全部</Radio.Button>
+            <Radio.Button value="绿茶">绿茶</Radio.Button>
+            <Radio.Button value="红茶">红茶</Radio.Button>
+            <Radio.Button value="黑茶">黑茶</Radio.Button>
+            <Radio.Button value="白茶">白茶</Radio.Button>
+            <Radio.Button value="黄茶">黄茶</Radio.Button>
+            <Radio.Button value="乌龙茶">乌龙茶</Radio.Button>
+            <Radio.Button value="花茶">花茶</Radio.Button>
+            <Radio.Button value="茶宠">茶宠</Radio.Button>
+            <Radio.Button value="茶具">茶具</Radio.Button>
+          </Radio.Group>
+        </div>
+        <div style={{ marginTop: 16 }}>
+          <span>十大名茶：</span>
+          <Radio.Group buttonStyle="solid" value={this.state.value2} onChange={this.onChange2}>
+            <Radio.Button value="全部">全部</Radio.Button>
+            <Radio.Button value="西湖龙井">西湖龙井</Radio.Button>
+            <Radio.Button value="江苏碧螺春">江苏碧螺春</Radio.Button>
+            <Radio.Button value="安徽毛峰">安徽毛峰</Radio.Button>
+            <Radio.Button value="安徽瓜片">安徽瓜片</Radio.Button>
+            <Radio.Button value="福建银针">福建银针</Radio.Button>
+            <Radio.Button value="信阳毛尖">信阳毛尖</Radio.Button>
+            <Radio.Button value="安徽祁门红">安徽祁门红</Radio.Button>
+            <Radio.Button value="都匀毛尖">都匀毛尖</Radio.Button>
+            <Radio.Button value="武夷岩茶">武夷岩茶</Radio.Button>
+            <Radio.Button value="福建铁观音">福建铁观音</Radio.Button>
+          </Radio.Group>
+        </div>
+        <div style={{ marginTop: 16 }}>
+          <span>价格：</span>
+          <Radio.Group buttonStyle="solid" value={this.state.value3} onChange={this.onChange3}>
+            <Radio.Button value="全部">全部</Radio.Button>
+            <Radio.Button value="100元以下">100元以下</Radio.Button>
+            <Radio.Button value="100~200元">100~200元</Radio.Button>
+            <Radio.Button value="200~500元">200~500元</Radio.Button>
+            <Radio.Button value="500元以上">500元以上</Radio.Button>
+          </Radio.Group>
+        </div>
         </Card>
         <div className={styles.cardList}>{cardList}</div>
         <Divider>END</Divider>

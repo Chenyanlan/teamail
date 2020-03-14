@@ -413,7 +413,7 @@ export default () => (
                   </InfiniteScroll>
                 </div>
               </TabPane>
-              <TabPane
+              {/* <TabPane
                 tab="茶叶知识"
                 key="3"
               >
@@ -467,7 +467,7 @@ export default () => (
                     />
                   </InfiniteScroll>
                 </div>
-              </TabPane>
+              </TabPane> */}
             </Tabs>
           </Card>
         </Col>

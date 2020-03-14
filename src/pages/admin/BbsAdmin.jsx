@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { Table, Divider, Popconfirm, message,Input, Button, Icon,notification } from 'antd';
+import { Table, Divider, Popconfirm, message, Input, Button, Icon, List, Avatar } from 'antd';
 import { connect } from 'dva';
 import Highlighter from 'react-highlight-words';
 import ModifyArticle from '../../components/FormComponents/ModifyArticle';
+import Comments from './Comments';
 
 @connect(({ listSearchArticles }) => ({
     listSearchArticles,
@@ -207,7 +208,12 @@ class BbsAdmin extends Component {
           ];
         return (
             <div>
-                <Table columns={columns} dataSource={articlesList} />
+                <Table
+                  columns={columns}
+                  dataSource={articlesList}
+                  expandedRowRender={record => (
+                    <Comments comment={record} />
+                  ) } />
                 <ModifyArticle
                     wrappedComponentRef={this.saveFormRef}
                     visible={this.state.visible}

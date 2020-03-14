@@ -26,10 +26,16 @@ class Shopping extends Component {
 
     numDelete =() => {
         const {num} = this.state;
-        const newNum = num - 1;
-        this.setState({
-            num:newNum,
-        })
+        if (num === 1) {
+            this.setState({
+                num: 1,
+            })
+        } else {
+            const newNum = num - 1;
+            this.setState({
+                num: newNum,
+            })
+        }
     }
 
     toPaypal = () =>{
@@ -42,7 +48,6 @@ class Shopping extends Component {
             {
                 name: '三万昌 炒青绿茶2019新茶苏州洞庭碧螺春茶散装东山西山茶叶125g',
                 cover:shopping1,
-                taste:'食品口味：绿茶-春茶',
                 price,
                 num,
                 amount:price*num,
@@ -54,11 +59,6 @@ class Shopping extends Component {
               dataIndex: 'name',
               key: 'name',
               render:text => (<a href="../../mall/1">{text}</a>),
-            },
-            {
-              title: '口味',
-              dataIndex: 'taste',
-              key: 'taste',
             },
             {
               title: '单价',
