@@ -157,15 +157,14 @@ class Mall extends React.Component {
           <span>分类：</span>
           <Radio.Group buttonStyle="solid" value={this.state.value1} onChange={this.onChange1}>
             <Radio.Button value="全部">全部</Radio.Button>
-            <Radio.Button value="绿茶">绿茶</Radio.Button>
-            <Radio.Button value="红茶">红茶</Radio.Button>
-            <Radio.Button value="黑茶">黑茶</Radio.Button>
-            <Radio.Button value="白茶">白茶</Radio.Button>
-            <Radio.Button value="黄茶">黄茶</Radio.Button>
-            <Radio.Button value="乌龙茶">乌龙茶</Radio.Button>
-            <Radio.Button value="花茶">花茶</Radio.Button>
-            <Radio.Button value="茶宠">茶宠</Radio.Button>
-            <Radio.Button value="茶具">茶具</Radio.Button>
+            <Radio.Button value={1}>绿茶</Radio.Button>
+            <Radio.Button value={2}>红茶</Radio.Button>
+            <Radio.Button value={3}>黑茶</Radio.Button>
+            <Radio.Button value={4}>白茶</Radio.Button>
+            <Radio.Button value={5}>黄茶</Radio.Button>
+            <Radio.Button value={6}>乌龙茶</Radio.Button>
+            <Radio.Button value={7}>花茶</Radio.Button>
+            <Radio.Button value={8}>茶具</Radio.Button>
           </Radio.Group>
         </div>
         <div style={{ marginTop: 16 }}>
@@ -188,10 +187,10 @@ class Mall extends React.Component {
           <span>价格：</span>
           <Radio.Group buttonStyle="solid" value={this.state.value3} onChange={this.onChange3}>
             <Radio.Button value="全部">全部</Radio.Button>
-            <Radio.Button value="100元以下">100元以下</Radio.Button>
-            <Radio.Button value="100~200元">100~200元</Radio.Button>
-            <Radio.Button value="200~500元">200~500元</Radio.Button>
-            <Radio.Button value="500元以上">500元以上</Radio.Button>
+            <Radio.Button value={1}>100元以下</Radio.Button>
+            <Radio.Button value={2}>100~200元</Radio.Button>
+            <Radio.Button value={3}>200~500元</Radio.Button>
+            <Radio.Button value={4}>500元以上</Radio.Button>
           </Radio.Group>
         </div>
         </Card>
