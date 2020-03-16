@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { PageHeaderWrapper } from '@ant-design/pro-layout';
-import {connect} from 'dva';
+import { connect } from 'dva';
 import moment from 'moment';
 import { Card, Col, Form, List, Row, Select, Typography,Button,Divider,Radio  } from 'antd';
 import square7 from '../../assets/square7.jpg';
@@ -31,12 +31,11 @@ const list2 = [
 
 
 @Form.create()
-@connect(({ listSearchArticles, loading }) => ({
-  listSearchArticles,
+@connect(({ mall, loading }) => ({
+  mall,
   loading: loading.models.listSearchArticles,
 }))
-class Mall extends React.Component {
-
+class Mall extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -47,17 +46,27 @@ class Mall extends React.Component {
   }
 
   componentDidMount() {
-    const {dispatch} = this.props;
+    const { dispatch } = this.props;
     dispatch({
-      type: 'listSearchArticles/fetch2',
-      payload: {
-        count: 8,
-      }
+      type: 'mall/getGoodsList',
     })
   }
 
   onChange1 = e => {
     console.log('radio1 checked', e.target.value);
+    const { dispatch } = this.props;
+    if (e.target.value === '全部') {
+      dispatch({
+        type: 'mall/getGoodsList',
+      })
+    } else {
+      dispatch({
+        type: 'mall/getGoodsListByClassify',
+        payload: {
+          goodsClassify: e.target.value,
+        },
+      })
+    }
     this.setState({
       value1: e.target.value,
       value2: '全部',
@@ -67,6 +76,19 @@ class Mall extends React.Component {
 
   onChange2 = e => {
     console.log('radio2 checked', e.target.value);
+    const { dispatch } = this.props;
+    if (e.target.value === '全部') {
+      dispatch({
+        type: 'mall/getGoodsList',
+      })
+    } else {
+      dispatch({
+        type: 'mall/getGoodsListByTitle',
+        payload: {
+          goodsTitle: e.target.value,
+        },
+      })
+    }
     this.setState({
       value2: e.target.value,
       value1: '全部',
@@ -76,6 +98,19 @@ class Mall extends React.Component {
 
   onChange3 = e => {
     console.log('radio3 checked', e.target.value);
+    const { dispatch } = this.props;
+    if (e.target.value === '全部') {
+      dispatch({
+        type: 'mall/getGoodsList',
+      })
+    } else {
+      dispatch({
+        type: 'mall/getGoodsListByPricesegment',
+        payload: {
+          goodsPricesegment: e.target.value,
+        },
+      })
+    }
     this.setState({
       value3: e.target.value,
       value1: '全部',
@@ -84,24 +119,9 @@ class Mall extends React.Component {
   };
 
   render() {
-
-    const formItemLayout = {
-      wrapperCol: {
-        xs: {
-          span: 24,
-        },
-        sm: {
-          span: 24,
-        },
-        md: {
-          span: 12,
-        },
-      },
-    };
     console.log(this.props);
-    const {form ,listSearchArticles:{list},loading} = this.props;
-    const { getFieldDecorator } = form;
-    const cardList = list && (
+    const { mall: { goodsList }, loading } = this.props;
+    const cardList = goodsList && (
       <List
         rowKey="id"
         loading={loading}
@@ -113,34 +133,23 @@ class Mall extends React.Component {
           sm: 2,
           xs: 1,
         }}
-        dataSource={list2}
-        // loadMore={
-        // <div
-        //   style={{
-        //     textAlign: 'center',
-        //     marginTop: 12,
-        //     height: 32,
-        //     lineHeight: '32px',
-        //   }}
-        // >
-        //   <Button onClick={this.onLoadMore}>加载更多</Button>
-        // </div>}
-        renderItem={item=>(
+        dataSource={goodsList}
+        renderItem={item => (
           <List.Item>
             <Card className={styles.card} hoverable
              cover={
-              <img alt={item.title} src={item.cover} />
+              <img alt={item.goodsTitle} src={item.goodsPictureDisplay} />
               // <div className={styles.img}></div>
              }>
-              <Card.Meta title={<a href="../mall/1">{item.title}</a>}
+              <Card.Meta title={<a href="../mall/1">{item.goodsTitle}</a>}
               description={
               <Paragraph className={styles.item} ellipsis={{rows:2}}>
-                {item.subDescription}
+                {item.goodsTitle}
               </Paragraph>}
                />
                <div className={styles.cardItemContent}>
-                  <span className={styles.money}> <Text type="danger" strong>￥&nbsp;&nbsp;&nbsp;{item.money}</Text></span>
-                      <span className={styles.count}> 月销&nbsp;&nbsp;{item.count}&nbsp;笔</span>
+                  <span className={styles.money}> <Text type="danger" strong>￥&nbsp;&nbsp;&nbsp;{item.goodsPrice}</Text></span>
+                      <span className={styles.count}> 月销&nbsp;&nbsp;{item.goodsCount}&nbsp;笔</span>
                </div>
             </Card>
           </List.Item>
@@ -171,16 +180,16 @@ class Mall extends React.Component {
           <span>十大名茶：</span>
           <Radio.Group buttonStyle="solid" value={this.state.value2} onChange={this.onChange2}>
             <Radio.Button value="全部">全部</Radio.Button>
-            <Radio.Button value="西湖龙井">西湖龙井</Radio.Button>
-            <Radio.Button value="江苏碧螺春">江苏碧螺春</Radio.Button>
-            <Radio.Button value="安徽毛峰">安徽毛峰</Radio.Button>
-            <Radio.Button value="安徽瓜片">安徽瓜片</Radio.Button>
-            <Radio.Button value="福建银针">福建银针</Radio.Button>
-            <Radio.Button value="信阳毛尖">信阳毛尖</Radio.Button>
-            <Radio.Button value="安徽祁门红">安徽祁门红</Radio.Button>
-            <Radio.Button value="都匀毛尖">都匀毛尖</Radio.Button>
-            <Radio.Button value="武夷岩茶">武夷岩茶</Radio.Button>
-            <Radio.Button value="福建铁观音">福建铁观音</Radio.Button>
+            <Radio.Button value="龙井">西湖龙井</Radio.Button>
+            <Radio.Button value="碧螺春">江苏碧螺春</Radio.Button>
+            <Radio.Button value="毛峰">安徽毛峰</Radio.Button>
+            <Radio.Button value="瓜片">安徽瓜片</Radio.Button>
+            <Radio.Button value="银针">福建银针</Radio.Button>
+            <Radio.Button value="毛尖">信阳毛尖</Radio.Button>
+            <Radio.Button value="祁门红">安徽祁门红</Radio.Button>
+            <Radio.Button value="毛尖">都匀毛尖</Radio.Button>
+            <Radio.Button value="岩茶">武夷岩茶</Radio.Button>
+            <Radio.Button value="铁观音">福建铁观音</Radio.Button>
           </Radio.Group>
         </div>
         <div style={{ marginTop: 16 }}>

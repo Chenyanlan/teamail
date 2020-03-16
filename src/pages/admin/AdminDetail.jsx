@@ -6,6 +6,7 @@ import styles from './AdminDetail.less';
 import WikiAdmin from './WikiAdmin';
 import UserAdmin from './UserAdmin';
 import BbsAdmin from './BbsAdmin';
+import MallAdmin from './MallAdmin';
 
 const { Item } = Menu;
 
@@ -86,7 +87,7 @@ class AdminDetail extends Component {
           case 'bbs':
             return <BbsAdmin />;
           case 'mall':
-            return <Blank />;
+            return <MallAdmin />;
           case 'welcome':
             return <Blank />;
           case 'user':
