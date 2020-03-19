@@ -1,11 +1,12 @@
 import { notification } from 'antd';
-import { getCartList, plusNum, minusNum, removeCart } from '../services/shopping';
+import { getCartList, plusNum, minusNum, removeCart, getAllMoney } from '../services/shopping';
 
 const Model = {
     namespace: 'shopping',
     state: {
         cartList: [],
         result: {},
+        allMoney: {},
     },
     effects: {
         *getCartList({ payload }, { call, put }) {
@@ -51,6 +52,11 @@ const Model = {
                 payload: response2,
             })
             console.log(response2);
+            const response3 = yield call(getAllMoney, data);
+            yield put({
+                type: 'modifyAllMoney',
+                payload: response3,
+            })
         },
         *minusNum({ payload }, { call, put }) {
             const response = yield call(minusNum, payload);
@@ -68,6 +74,11 @@ const Model = {
                 payload: response2,
             })
             console.log(response2);
+            const response3 = yield call(getAllMoney, data);
+            yield put({
+                type: 'modifyAllMoney',
+                payload: response3,
+            })
         },
         *removeCart({ payload }, { call, put }) {
             const response = yield call(removeCart, payload);
@@ -104,6 +115,19 @@ const Model = {
                 payload: response2,
             })
             console.log(response2);
+            const response3 = yield call(getAllMoney, data);
+            yield put({
+                type: 'modifyAllMoney',
+                payload: response3,
+            })
+        },
+        *getAllMoney({ payload }, { call, put }) {
+            const response = yield call(getAllMoney, payload);
+            yield put({
+                type: 'modifyAllMoney',
+                payload: response,
+            })
+            console.log(response);
         },
     },
     reducers: {
@@ -112,6 +136,9 @@ const Model = {
         },
         modifyResult(state, action) {
             return { ...state, result: action.payload }
+        },
+        modifyAllMoney(state, action) {
+            return { ...state, allMoney: action.payload }
         },
     },
 }

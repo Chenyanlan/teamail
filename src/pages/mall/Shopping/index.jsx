@@ -25,6 +25,12 @@ class Shopping extends Component {
                 cartUserId: localStorage.getItem('userId'),
             },
         })
+        dispatch({
+            type: 'shopping/getAllMoney',
+            payload: {
+                cartUserId: localStorage.getItem('userId'),
+            },
+        })
     }
 
     numAdd = record => {
@@ -82,7 +88,7 @@ class Shopping extends Component {
     render() {
         const { goodsPrice, cartNum } = this.state;
         console.log(this.props);
-        const { shopping: { cartList } } = this.props;
+        const { shopping: { cartList, allMoney, allMoney: { money } } } = this.props;
         const columns = [
             {
               title: '商品名称',
@@ -152,7 +158,7 @@ class Shopping extends Component {
                             <Descriptions.Item label="已选商品">
                             <span><Statistic value={cartList.length} valueStyle={{ color: '#ff0036' }} suffix="件"/></span>
                             </Descriptions.Item>
-                            <Descriptions.Item label="合计（不含运费）">   <Statistic value={this.getAllMoney} valueStyle={{ color: '#ff0036' }} prefix="¥" /></Descriptions.Item>
+                            <Descriptions.Item label="合计">   <Statistic value={JSON.stringify(allMoney) === '{}' ? 0 : money[0].total} valueStyle={{ color: '#ff0036' }} prefix="¥"  precision={2}/></Descriptions.Item>
                             <Descriptions.Item>
                             <Button onClick={this.toPaypal} icon="pay-circle" type="danger" className={styles.btn}>结算</Button>
                             </Descriptions.Item>

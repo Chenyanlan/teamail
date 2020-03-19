@@ -23,3 +23,9 @@ export async function removeCart(params) {
         params,
     });
 }
+
+export async function getAllMoney(params) {
+    return request('http://localhost:8082/demo/admin/getallmoney', {
+        params,
+    });
+}
