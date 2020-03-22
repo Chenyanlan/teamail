@@ -141,7 +141,7 @@ class Mall extends Component {
               <img alt={item.goodsTitle} src={item.goodsPictureDisplay} />
               // <div className={styles.img}></div>
              }>
-              <Card.Meta title={<a href="../mall/1">{item.goodsTitle}</a>}
+              <Card.Meta title={<a href={`../mall/${item.goodsId}`}>{item.goodsTitle}</a>}
               description={
               <Paragraph className={styles.item} ellipsis={{rows:2}}>
                 {item.goodsTitle}

@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import { getCartList, plusNum, minusNum, removeCart, getAllMoney } from '../services/shopping';
+import { getCartList, plusNum, minusNum, removeCart, getAllMoney, getDisplayPicture, getDetailPicture, getGoodsDetailById, getCartByIds, addCart, removePicture, addPicture } from '../services/shopping';
 
 const Model = {
     namespace: 'shopping',
@@ -7,6 +7,10 @@ const Model = {
         cartList: [],
         result: {},
         allMoney: {},
+        goodsDisplay: {},
+        goodsDetail: {},
+        goods: {},
+        cart: {},
     },
     effects: {
         *getCartList({ payload }, { call, put }) {
@@ -129,6 +133,168 @@ const Model = {
             })
             console.log(response);
         },
+        *getDisplayPicture({ payload }, { call, put }) {
+            const response = yield call(getDisplayPicture, payload);
+            yield put({
+                type: 'queryGoodsDisplay',
+                payload: response,
+            })
+            console.log(response)
+        },
+        *getDetailPicture({ payload }, { call, put }) {
+            const response = yield call(getDetailPicture, payload);
+            yield put({
+                type: 'queryGoodsDetail',
+                payload: response,
+            })
+            console.log(response)
+        },
+        *getGoods({ payload }, { call, put }) {
+            const response = yield call(getGoodsDetailById, payload);
+            yield put({
+                type: 'queryGoods',
+                payload: response,
+            })
+            console.log(response)
+        },
+        *getCartByIds({ payload }, { call, put }) {
+            const response = yield call(getCartByIds, payload);
+            yield put({
+                type: 'queryCart',
+                payload: response,
+            })
+            console.log(response);
+        },
+        *addCart({ payload }, { call, put }) {
+            const response = yield call(getCartByIds, payload);
+            yield put({
+                type: 'queryCart',
+                payload: response,
+            })
+            console.log(response);
+            if (response.cart === null) {
+                const response2 = yield call(addCart, payload);
+                yield put({
+                    type: 'modifyResult',
+                    payload: response2,
+                })
+                console.log(response2)
+                if (response2.success === true) {
+                    notification.success({
+                    message: '成功',
+                    description:
+                        '购物车添加成功',
+                    onClick: () => {
+                        console.log('Notification Clicked!');
+                    },
+                    });
+                } else {
+                    notification.error({
+                        message: '失败',
+                        description:
+                        '购物车添加失败',
+                        onClick: () => {
+                        console.log('Notification Clicked!');
+                        },
+                    });
+                }
+            } else {
+                const data = {
+                    cartId: response.cart.cartId,
+                }
+                const response3 = yield call(plusNum, data);
+                yield put({
+                    type: 'modifyResult',
+                    payload: response3,
+                })
+                console.log(response3);
+                if (response3.success === true) {
+                    notification.success({
+                    message: '成功',
+                    description:
+                        '该商品已进入购物车，数量加1',
+                    onClick: () => {
+                        console.log('Notification Clicked!');
+                    },
+                    });
+                } else {
+                    notification.error({
+                        message: '失败',
+                        description:
+                        '购物车添加失败',
+                        onClick: () => {
+                        console.log('Notification Clicked!');
+                        },
+                    });
+                }
+            }
+        },
+        *removePicture({ payload }, { call, put }) {
+            const response = yield call(removePicture, payload);
+            yield put({
+                type: 'modifyResult',
+                payload: response,
+            })
+            console.log(response);
+            const data = {
+                pictureGoodsId: localStorage.getItem('goodsId'),
+            }
+            const response1 = yield call(getDisplayPicture, data);
+            yield put({
+                type: 'queryGoodsDisplay',
+                payload: response1,
+            })
+            console.log(response1)
+            const response3 = yield call(getDetailPicture, data);
+            yield put({
+                type: 'queryGoodsDetail',
+                payload: response3,
+            })
+            console.log(response3)
+        },
+        *addGoodsPicture({ payload }, { call, put }) {
+            const response = yield call(addPicture, payload);
+            yield put({
+                type: 'modifyResult',
+                payload: response,
+            })
+            console.log(response);
+            if (response.success === true) {
+                notification.success({
+                message: '成功',
+                description:
+                    '图片添加成功',
+                onClick: () => {
+                    console.log('Notification Clicked!');
+                },
+                });
+            } else {
+                notification.error({
+                    message: '失败',
+                    description:
+                    '图片添加失败',
+                    onClick: () => {
+                    console.log('Notification Clicked!');
+                    },
+                });
+            }
+            const data = {
+                pictureGoodsId: localStorage.getItem('goodsId'),
+            }
+            const response1 = yield call(getDisplayPicture, data);
+            yield put({
+                type: 'queryGoodsDisplay',
+                payload: response1,
+            })
+            console.log(response1)
+            const response2 = yield call(getDetailPicture, data);
+            yield put({
+                type: 'queryGoodsDetail',
+                payload: response2,
+            })
+            console.log(response2)
+        }
+
     },
     reducers: {
         queryCarts(state, action) {
@@ -139,6 +305,18 @@ const Model = {
         },
         modifyAllMoney(state, action) {
             return { ...state, allMoney: action.payload }
+        },
+        queryGoodsDisplay(state, action) {
+            return { ...state, goodsDisplay: action.payload }
+        },
+        queryGoodsDetail(state, action) {
+            return { ...state, goodsDetail: action.payload }
+        },
+        queryGoods(state, action) {
+            return { ...state, goods: action.payload.goods }
+        },
+        queryCart(state, action) {
+            return { ...state, cart: action.payload }
         },
     },
 }

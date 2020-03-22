@@ -29,3 +29,47 @@ export async function getAllMoney(params) {
         params,
     });
 }
+
+export async function getDisplayPicture(params) {
+    return request('http://localhost:8082/demo/admin/getdisplay', {
+        params,
+    });
+}
+
+export async function getDetailPicture(params) {
+    return request('http://localhost:8082/demo/admin/getdetail', {
+        params,
+    });
+}
+
+export async function getGoodsDetailById(params) {
+    return request('http://localhost:8082/demo/admin/getgoodsbyid', {
+        params,
+    });
+}
+
+export async function getCartByIds(params) {
+    return request('http://localhost:8082/demo/admin/getcartbyids', {
+        params,
+    });
+}
+
+export async function addCart(params) {
+    return request('http://localhost:8082/demo/admin/addcart', {
+      method: 'POST',
+      data: params,
+    });
+}
+
+export async function removePicture(params) {
+    return request('http://localhost:8082/demo/admin/removegoodspicture', {
+        params,
+    });
+}
+
+export async function addPicture(params) {
+    return request('http://localhost:8082/demo/admin/addgoodspicture', {
+      method: 'POST',
+      data: params,
+    });
+}

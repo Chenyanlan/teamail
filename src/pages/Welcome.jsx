@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { GridContent } from '@ant-design/pro-layout';
 import { FormattedMessage } from 'umi-plugin-react/locale';
 import moment from 'moment';
+import { connect } from 'dva';
+import router from 'umi/router';
 import { Carousel, Row, Col, Tabs, Icon, Card, List, Avatar, Typography, Menu, Divider } from 'antd';
 import InfiniteScroll from 'react-infinite-scroller';
 import TagCloud from '../components/TagCloud'
@@ -32,9 +34,7 @@ for (let i = 0; i < 1; i++) {
       'We supply a series of design principles, practical patterns and high quality design resources (Sketch and Axure), to help people create their product prototypes beautifully and efficiently.',
   });
 }
-function handleClick(e) {
-  console.log('click', e);
-}
+
 
 const IconText = ({ type, text }) => (
   <span>
@@ -79,7 +79,7 @@ const data4 = [
   },
 ];
 const { TabPane } = Tabs;
-const { Title, Paragraph,Text } = Typography;
+const { Title, Paragraph, Text } = Typography;
 const { SubMenu } = Menu;
 // 欢迎界面，用户登录主页面
 const tags = [
@@ -172,8 +172,55 @@ const list2 = [
   { title: '2019新茶上市西湖牌特级碧螺春200g纪念纸包茶叶春茶,龙井绿茶', cover: square9, subDescription: '2019新茶上市西湖牌特级碧螺春200g纪念纸包茶叶春茶,龙井绿茶',money: Math.floor(Math.random() * 50) + 40, count: Math.floor(Math.random() * 50) + 40 },
   { title: '买一送一铁观音 茶叶1725乌龙茶新茶铁观音浓香型礼盒装', cover: square10, subDescription: '买一送一铁观音 茶叶1725乌龙茶新茶铁观音浓香型礼盒装',money: Math.floor(Math.random() * 50) + 40, count: Math.floor(Math.random() * 50) + 40 },
 ]
-export default () => (
-  <GridContent>
+
+@connect(({ welcome, mall, listSearchArticles }) => ({
+  welcome,
+  goodsList: mall.goodsList,
+  nearList: listSearchArticles.nearList,
+  article: listSearchArticles.article,
+}))
+class Welcome extends Component {
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch({
+      type: 'welcome/getLunbos',
+    })
+    dispatch({
+      type: 'mall/getGoodsList',
+    })
+    dispatch({
+      type: 'listSearchArticles/getArticleByTime',
+    })
+    dispatch({
+      type: 'listSearchArticles/getArticleById',
+      payload: {
+        articleId: 1,
+      },
+    })
+  }
+
+   handleClick= e => {
+    console.log('click', e);
+    const { key } = e;
+    if (key === '1' || key ==='4' ||key === '7' || key ==='10' || key ==='13' ||key === '16' || key ==='19') {
+      router.push('/wiki');
+    } else if (key === '2' ||key === '5' || key ==='8' ||key === '11' ||key === '14' || key ==='17' ||key === '20') {
+      router.push('/mall');
+    } else {
+      router.push('/article');
+    }
+  }
+
+  render() {
+    console.log(this.props);
+    const { welcome: { lunbo }, goodsList, nearList, article } = this.props;
+    console.log(goodsList);
+    const goodlist = goodsList.slice(0, 4);
+    const nearlist = nearList.slice(0, 4);
+    console.log(article);
+    const articles = [article];
+    return (
+      <GridContent>
     <React.Fragment>
       <Row gutter={24}>
         <Col xl={16} lg={24} md={24} sm={24} xs={24}
@@ -182,21 +229,15 @@ export default () => (
           }}
         >
           <Carousel autoplay>
-            <div>
-              <div className={styles.lunbo1}></div>
-            </div>
-            <div>
-              <div className={styles.lunbo2}></div>
-            </div>
-            <div>
-              <div className={styles.lunbo3}></div>
-            </div>
-            <div>
-              <div className={styles.lunbo4}></div>
-            </div>
-            <div>
-              <div className={styles.lunbo5}></div>
-            </div>
+            {
+              lunbo.map(item => {
+                return (
+                  <div>
+                    <img className={styles.lunbo} src={item.lunboDetail} alt="" />
+                  </div>
+                )
+              })
+            }
           </Carousel>
         </Col>
         <Col xl={8} lg={24} md={24} sm={24} xs={24} style={{
@@ -215,117 +256,110 @@ export default () => (
       </Row>
       <Row gutter={24}>
         <Col xl={6} lg={24} sm={24} xs={24} style={{ marginBottom: 24 }}>
-          <Menu onClick={handleClick} className={styles.menu} mode="vertical">
+          <Menu onClick={this.handleClick} className={styles.menu} mode="vertical">
             <SubMenu
-              key="sub1"
+              key={1}
               title={
                 <span>
-                  <Icon type="mail" />
+                  <Icon type="smile" />
                   <span>绿茶</span>
                 </span>
               }
             >
               <Menu.ItemGroup title="绿茶">
                 <Menu.Item key="1">百科</Menu.Item>
-                <Menu.Item key="2">文化</Menu.Item>
-                <Menu.Item key="3">知识</Menu.Item>
-                <Menu.Item key="4">商品</Menu.Item>
+                <Menu.Item key="2">商品</Menu.Item>
+                <Menu.Item key="3">文章</Menu.Item>
               </Menu.ItemGroup>
             </SubMenu>
             <SubMenu
-              key="sub2"
+              key={2}
               title={
                 <span>
-                  <Icon type="appstore" />
+                  <Icon type="smile" />
                   <span>红茶</span>
                 </span>
               }
             >
               <Menu.ItemGroup title="红茶">
-                <Menu.Item key="5">百科</Menu.Item>
-                <Menu.Item key="6">文化</Menu.Item>
-                <Menu.Item key="7">知识</Menu.Item>
-                <Menu.Item key="8">商品</Menu.Item>
+                <Menu.Item key="4">百科</Menu.Item>
+                <Menu.Item key="5">商品</Menu.Item>
+                <Menu.Item key="6">文章</Menu.Item>
               </Menu.ItemGroup>
             </SubMenu>
             <SubMenu
-              key="sub3"
+              key={4}
               title={
                 <span>
-                  <Icon type="setting" />
+                  <Icon type="smile" />
                   <span>白茶</span>
                 </span>
               }
             >
               <Menu.ItemGroup title="白茶">
-                <Menu.Item key="9">百科</Menu.Item>
-                <Menu.Item key="10">文化</Menu.Item>
-                <Menu.Item key="11">知识</Menu.Item>
-                <Menu.Item key="12">商品</Menu.Item>
+                <Menu.Item key="7">百科</Menu.Item>
+                <Menu.Item key="8">商品</Menu.Item>
+                <Menu.Item key="9">文章</Menu.Item>
               </Menu.ItemGroup>
             </SubMenu>
             <SubMenu
-              key="sub4"
+              key={5}
               title={
                 <span>
-                  <Icon type="setting" />
+                  <Icon type="smile" />
                   <span>黄茶</span>
                 </span>
               }
             >
               <Menu.ItemGroup title="黄茶">
-                <Menu.Item key="13">百科</Menu.Item>
-                <Menu.Item key="14">文化</Menu.Item>
-                <Menu.Item key="15">知识</Menu.Item>
-                <Menu.Item key="16">商品</Menu.Item>
+                <Menu.Item key="10">百科</Menu.Item>
+                <Menu.Item key="11">商品</Menu.Item>
+                <Menu.Item key="12">文章</Menu.Item>
               </Menu.ItemGroup>
             </SubMenu>
             <SubMenu
-              key="sub5"
+              key={3}
               title={
                 <span>
-                  <Icon type="setting" />
+                  <Icon type="smile" />
                   <span>黑茶</span>
                 </span>
               }
             >
               <Menu.ItemGroup title="黑茶">
-                <Menu.Item key="17">百科</Menu.Item>
-                <Menu.Item key="18">文化</Menu.Item>
-                <Menu.Item key="19">知识</Menu.Item>
-                <Menu.Item key="20">商品</Menu.Item>
+                <Menu.Item key="13">百科</Menu.Item>
+                <Menu.Item key="14">商品</Menu.Item>
+                <Menu.Item key="15">文章</Menu.Item>
               </Menu.ItemGroup>
             </SubMenu>
             <SubMenu
-              key="sub6"
+              key={6}
               title={
                 <span>
-                  <Icon type="setting" />
-                  <span>青茶</span>
+                  <Icon type="smile" />
+                  <span>乌龙茶</span>
                 </span>
               }
             >
-              <Menu.ItemGroup title="青茶">
-                <Menu.Item key="21">百科</Menu.Item>
-                <Menu.Item key="22">文化</Menu.Item>
-                <Menu.Item key="23">知识</Menu.Item>
-                <Menu.Item key="24">商品</Menu.Item>
+              <Menu.ItemGroup title="乌龙茶">
+                <Menu.Item key="16">百科</Menu.Item>
+                <Menu.Item key="17">商品</Menu.Item>
+                <Menu.Item key="18">文章</Menu.Item>
               </Menu.ItemGroup>
             </SubMenu>
             <SubMenu
-              key="sub7"
+              key={7}
               title={
                 <span>
-                  <Icon type="setting" />
+                  <Icon type="smile" />
                   <span>花茶及其他</span>
                 </span>
               }
             >
               <Menu.ItemGroup title="花茶及其他">
-                <Menu.Item key="21">百科</Menu.Item>
-                <Menu.Item key="22">文化</Menu.Item>
-                <Menu.Item key="23">知识</Menu.Item>
-                <Menu.Item key="24">商品</Menu.Item>
+                <Menu.Item key="19">百科</Menu.Item>
+                <Menu.Item key="20">商品</Menu.Item>
+                <Menu.Item key="21">文章</Menu.Item>
               </Menu.ItemGroup>
             </SubMenu>
           </Menu>
@@ -353,17 +387,16 @@ export default () => (
                 key="1"
               >
                 <div className={styles.topic}>
-                  <Title level={4}>中国茶产业的渠道效率革命</Title>
+            <Title level={4}>{article.articleTitle}</Title>
                   <List
                     itemLayout="vertical"
                     size="large"
-                    dataSource={listData}
+                    dataSource={articles}
                     renderItem={item => (
                       <List.Item
-                        key={item.title}
+                        key={item.articleId}
                         actions={[
                           <IconText type="star-o" text="156" key="list-vertical-star-o" />,
-                          // <IconText type="like-o" text="156" key="list-vertical-like-o" />,
                           <IconText type="message" text="2" key="list-vertical-message" />,
                         ]}
                         extra={
@@ -375,9 +408,12 @@ export default () => (
                         }
                       >
                         <List.Item.Meta
-                          avatar={<Avatar src={touxiang} />}
-                          title={<a href={item.href}>{item.title}</a>}
-                          description={item.description}
+                          avatar={<Avatar src={item.userAvatar} />}
+                          title={<a href={`./bbs/${item.articleId}`}>{item.articleTitle}</a>}
+                          description={
+                            <Paragraph ellipsis className={styles.description}>
+                            {item.articleDetail}</Paragraph>
+                          }
                         />
 
                       </List.Item>
@@ -397,14 +433,14 @@ export default () => (
                   >
                     <List
                       itemLayout="horizontal"
-                      dataSource={data3}
+                      dataSource={nearlist}
                       bordered={false}
                       renderItem={item => (
                         <List.Item>
                           <List.Item.Meta
-                            avatar={<Avatar src={touxiang2} />}
-                            title={<a href="https://ant.design">{item.title}</a>}
-                            description={<span>{item.description}</span>}
+                            avatar={<Avatar src={item.userAvatar} />}
+                            title={<a href={`./bbs/${item.articleId}`}>{item.articleTitle}</a>}
+                            description={<span className={styles.description}>{item.articleDetail}</span>}
                           />
 
                         </List.Item>
@@ -485,27 +521,27 @@ export default () => (
                 sm: 1,
                 xs: 1,
               }}
-              dataSource={list}
+              dataSource={goodlist}
               renderItem={item => (
                 <List.Item>
                   <Card
                     hoverable
-                    cover={<img alt={item.title} src={item.cover} />}
+                    cover={<img alt={item.goodsTitle} src={item.goodsPictureDisplay} />}
                   >
                     <Card.Meta
-                      title={<a href="./mall/1">{item.title}</a>}
+                      title={<a href={`./mall/${item.goodsId}`}>{item.goodsTitle}</a>}
                       description={
                         <Paragraph
                           ellipsis={{
                             rows: 2,
                           }}
                         >
-                          {item.subDescription}
+                          {item.goodsTitle}
                         </Paragraph>
                       }
                     />
                     <div>
-                      <span><Icon type="smile" theme="twoTone" twoToneColor="#eb2f96" />&nbsp;&nbsp;&nbsp;{item.count}人都说好</span>
+                      <span><Icon type="smile" theme="twoTone" twoToneColor="#eb2f96" />&nbsp;&nbsp;&nbsp;{item.goodsHighpraise}人都说好</span>
                     </div>
                   </Card>
                 </List.Item>
@@ -525,28 +561,28 @@ export default () => (
                 sm: 1,
                 xs: 1,
               }}
-              dataSource={list2}
+              dataSource={goodlist}
               renderItem={item => (
                 <List.Item>
                   <Card
                     hoverable
-                    cover={<img alt={item.title} src={item.cover} />}
+                    cover={<img alt={item.goodsTitle} src={item.goodsPictureDisplay} />}
                   >
                     <Card.Meta
-                      title={<a href="./mall/1">{item.title}</a>}
+                      title={<a href={`./mall/${item.goodsId}`}>{item.goodsTitle}</a>}
                       description={
                         <Paragraph
                           ellipsis={{
                             rows: 2,
                           }}
                         >
-                          {item.subDescription}
+                          {item.goodsTitle}
                         </Paragraph>
                       }
                     />
                     <div>
-                      <span className={styles.money}> <Text type="danger" strong>￥&nbsp;&nbsp;&nbsp;{item.money}</Text></span>
-                      <span className={styles.count}> 月销&nbsp;&nbsp;{item.count}&nbsp;笔</span>
+                      <span className={styles.money}> <Text type="danger" strong>￥&nbsp;&nbsp;&nbsp;{item.goodsPrice}</Text></span>
+                      <span className={styles.count}> 月销&nbsp;&nbsp;{item.goodsCount}&nbsp;笔</span>
                     </div>
                   </Card>
                 </List.Item>
@@ -558,4 +594,7 @@ export default () => (
       <Divider>END</Divider>
     </React.Fragment>
   </GridContent>
-);
+    )
+  }
+}
+export default Welcome;

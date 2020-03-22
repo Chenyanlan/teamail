@@ -43,7 +43,7 @@ import WikiDetails from './WikiDetails';
     };
 
     handleCreate = () => {
-      const { dispatch} = this.props;
+      const { dispatch } = this.props;
       const { wikiDetail } = this.state;
       console.log(wikiDetail);
       const { form } = this.formRef.props;

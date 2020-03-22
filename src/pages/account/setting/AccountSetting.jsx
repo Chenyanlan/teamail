@@ -15,21 +15,21 @@ const { Item } = Menu;
 class AccountSetting extends Component {
     main = undefined;
 
-    constructor(props){
+    constructor(props) {
         super(props);
         const menuMap = {
-            base:<FormattedMessage id="accountsettings.menuMap.basic" defaultMessage="Basic Settings" />,
-            security:(
+            base: <FormattedMessage id="accountsettings.menuMap.basic" defaultMessage="Basic Settings" />,
+            security: (
                 <FormattedMessage id="accountsettings.menuMap.security" defaultMessage="Security Settings" />
             ),
-            binding:(
+            binding: (
                 <FormattedMessage id="accountsettings.menuMap.binding" defaultMessage="Account Binding" />
             ),
-            notification:(
+            notification: (
                 <FormattedMessage id="accountsettings.menuMap.notification" defaultMessage="New Message Notification" />
-            )
+            ),
         }
-        this.state={
+        this.state = {
             mode: 'inline',
             menuMap,
             selectKey: 'base',
@@ -53,12 +53,12 @@ class AccountSetting extends Component {
         const { menuMap } = this.state;
         return Object.keys(menuMap).map(item => <Item key={item}>{menuMap[item]}</Item>);
       };
-    
+
       getRightTitle = () => {
         const { selectKey, menuMap } = this.state;
         return menuMap[selectKey];
       };
-    
+
       selectKey = key => {
         this.setState({
           selectKey: key,
@@ -94,24 +94,24 @@ class AccountSetting extends Component {
 
     renderChildren = () => {
         const { selectKey } = this.state;
-    
+
         switch (selectKey) {
           case 'base':
             return <BaseView />;
-    
+
           case 'security':
             return <Blank />;
-    
+
           case 'binding':
             return <Blank />;
-    
+
           case 'notification':
             return <Blank />;
-    
+
           default:
             break;
         }
-    
+
         return null;
       };
     

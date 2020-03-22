@@ -25,3 +25,17 @@ export async function removeGoods(params) {
         params,
     });
 }
+
+export async function modifyGoods(params) {
+    return request('http://localhost:8082/demo/admin/modifygoods', {
+      method: 'POST',
+      data: params,
+    });
+}
+
+export async function addGoods(params) {
+    return request('http://localhost:8082/demo/admin/addgoods', {
+      method: 'POST',
+      data: params,
+    });
+}

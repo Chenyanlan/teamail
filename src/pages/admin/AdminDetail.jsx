@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { Layout, Menu, Icon } from 'antd';
 import { FormattedMessage } from 'umi-plugin-react/locale';
-import Blank from '../account/setting/Blank';
 import styles from './AdminDetail.less';
 import WikiAdmin from './WikiAdmin';
 import UserAdmin from './UserAdmin';
 import BbsAdmin from './BbsAdmin';
 import MallAdmin from './MallAdmin';
+import WelcomeAdmin from './WelcomeAdmin';
 
 const { Item } = Menu;
 
@@ -89,7 +89,7 @@ class AdminDetail extends Component {
           case 'mall':
             return <MallAdmin />;
           case 'welcome':
-            return <Blank />;
+            return <WelcomeAdmin />;
           case 'user':
             return <UserAdmin />;
           default:

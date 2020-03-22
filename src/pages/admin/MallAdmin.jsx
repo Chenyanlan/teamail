@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Table, Divider, message, Popconfirm } from 'antd';
+import { Table, Divider, message, Popconfirm, Button } from 'antd';
 import ModifyGoods from '../../components/FormComponents/ModifyGoods';
 
 @connect(({ mall }) => ({
@@ -42,24 +42,45 @@ class MallAdmin extends Component {
       showModal = (record) => {
         this.setState({ visible: true, goods: record });
       };
-    
+
+      addGoods = () => {
+        this.setState({ visible: true });
+      }
+
       handleCancel = () => {
         this.setState({ visible: false });
       };
-    
+
       handleCreate = () => {
         const { form } = this.formRef.props;
+        const { dispatch } = this.props;
+        const { goods } = this.state;
         form.validateFields((err, values) => {
           if (err) {
             return;
           }
-    
+
           console.log('Received values of form: ', values);
+          values.goodsPictureDisplay = typeof (values.pictureDisplay) === 'string' ? values.pictureDisplay : values.pictureDisplay.file.response[0].url;
+          if (JSON.stringify(goods) === '{}') {
+              dispatch({
+                type: 'mall/addGoods',
+                payload: values,
+              })
+          } else {
+              values.goodsId = goods.goodsId;
+              console.log(values);
+              dispatch({
+                type: 'mall/modifyGoods',
+                payload: values,
+              })
+          }
+         
           form.resetFields();
           this.setState({ visible: false });
         });
       };
-    
+
       saveFormRef = formRef => {
         this.formRef = formRef;
       };
@@ -103,7 +124,7 @@ class MallAdmin extends Component {
                 }
             },
             {
-              title: '操作',
+              title: <Button onClick={this.addGoods}>添加商品</Button>,
               key: 'action',
               render: (text, record) => (
                 <span>
