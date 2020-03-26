@@ -158,7 +158,7 @@ class Shopping extends Component {
                             <Descriptions.Item label="已选商品">
                             <span><Statistic value={cartList.length} valueStyle={{ color: '#ff0036' }} suffix="件"/></span>
                             </Descriptions.Item>
-                            <Descriptions.Item label="合计">   <Statistic value={JSON.stringify(allMoney) === '{}' ? 0 : money[0].total} valueStyle={{ color: '#ff0036' }} prefix="¥"  precision={2}/></Descriptions.Item>
+                            <Descriptions.Item label="合计">   <Statistic value={JSON.stringify(allMoney) === '{}' ? 0 : money.length === 0 ? 0 : money[0].total} valueStyle={{ color: '#ff0036' }} prefix="¥" precision={2}/></Descriptions.Item>
                             <Descriptions.Item>
                             <Button onClick={this.toPaypal} icon="pay-circle" type="danger" className={styles.btn}>结算</Button>
                             </Descriptions.Item>
