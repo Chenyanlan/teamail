@@ -65,3 +65,15 @@ export async function removeStar(params) {
         params,
     })
 }
+
+export async function getStarGoodsByUserId(params) {
+    return request('http://localhost:8082/demo/admin/getstargoodsbyuserid', {
+        params,
+    })
+}
+
+export async function removeStarGoods(params) {
+    return request('http://localhost:8082/demo/admin/removestargoods', {
+        params,
+    })
+}

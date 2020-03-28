@@ -39,38 +39,6 @@ const options = [
 function onChange(value) {
     console.log(value);
 }
-const extra = (
-    <div className={styles.moreInfo}>
-        <Statistic title="状态" value="待审批" />
-        <Statistic title="订单金额" value={568.08} prefix="¥" />
-    </div>
-);
-const data = [
-    {
-        title: '很满意',
-    },
-    {
-        title: '还可以',
-    },
-    {
-        title: '凑活喝',
-    },
-    {
-        title: '一般吧',
-    },
-    {
-        title: '很满意',
-    },
-    {
-        title: '还可以',
-    },
-    {
-        title: '凑活喝',
-    },
-    {
-        title: '一般吧',
-    },
-];
 
 @connect(({ shopping }) => ({
     goodsDisplay: shopping.goodsDisplay,
@@ -128,9 +96,21 @@ class MallDetail extends Component {
             payload: {
                 cartGoodsId: id,
                 cartUserId: userId,
-            }
+            },
         })
         // router.push(`/mall/shopping/${userId}`);
+    }
+
+    addStarGoods = () => {
+        const userId = localStorage.getItem('userId');
+        const { dispatch, match: { params: { id } } } = this.props;
+        dispatch({
+            type: 'shopping/addStarGoods',
+            payload: {
+                starGoodsId: id,
+                starUserId: userId,
+            },
+        })
     }
 
 
@@ -238,6 +218,7 @@ class MallDetail extends Component {
                                     <Descriptions.Item span={3}>
                                         <Button type="danger" className={styles.btn} size="large" >立即购买</Button>
                                         <Button onClick={this.toShoppingCart} type="danger" icon="shopping-cart" className={styles.btn2} size="large" >加入购物车</Button>
+                                        <Button onClick={this.addStarGoods} type="primary" size="large" className={styles.btn3} >收藏商品</Button>
                                     </Descriptions.Item>
                                 </Descriptions>
                             </Card>

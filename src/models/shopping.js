@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import { getCartList, plusNum, minusNum, removeCart, getAllMoney, getDisplayPicture, getDetailPicture, getGoodsDetailById, getCartByIds, addCart, removePicture, addPicture } from '../services/shopping';
+import { getCartList, plusNum, minusNum, removeCart, getAllMoney, getDisplayPicture, getDetailPicture, getGoodsDetailById, getCartByIds, addCart, removePicture, addPicture, addStarGoods, getStarByUserGoodsId, changeStarGoods } from '../services/shopping';
 
 const Model = {
     namespace: 'shopping',
@@ -11,6 +11,7 @@ const Model = {
         goodsDetail: {},
         goods: {},
         cart: {},
+        starGoods: {},
     },
     effects: {
         *getCartList({ payload }, { call, put }) {
@@ -293,7 +294,79 @@ const Model = {
                 payload: response2,
             })
             console.log(response2)
-        }
+        },
+        *addStarGoods({ payload }, { call, put }) {
+            const response = yield call(getStarByUserGoodsId, payload);
+            yield put({
+                type: 'queryStarGoods',
+                payload: response,
+            })
+            console.log(response);
+            if (response.total>0) {
+                if (response.list[0].starIfYes === 0) {
+                    const response2 = yield call(changeStarGoods, payload);
+                    yield put({
+                        type: 'modifyResult',
+                        payload: response2,
+                    })
+                    console.log(response2);
+                    if (response2.success === true) {
+                        notification.success({
+                            message: '成功',
+                            description:
+                                '收藏成功',
+                            onClick: () => {
+                                console.log('Notification Clicked!');
+                            },
+                            });
+                    } else {
+                        notification.error({
+                            message: '失败',
+                            description:
+                                '收藏失败',
+                            onClick: () => {
+                                console.log('Notification Clicked!');
+                            },
+                        });
+                    }
+                } else {
+                    notification.warning({
+                        message: '注意',
+                        description:
+                            '该商品已收藏',
+                        onClick: () => {
+                            console.log('Notification Clicked!');
+                        },
+                    });
+                }
+            } else {
+                const response2 = yield call(addStarGoods, payload);
+                yield put({
+                    type: 'modifyResult',
+                    payload: response2,
+                })
+                console.log(response2);
+                if (response2.success === true) {
+                    notification.success({
+                        message: '成功',
+                        description:
+                            '收藏成功',
+                        onClick: () => {
+                            console.log('Notification Clicked!');
+                        },
+                        });
+                } else {
+                    notification.error({
+                        message: '失败',
+                        description:
+                            '收藏失败',
+                        onClick: () => {
+                            console.log('Notification Clicked!');
+                        },
+                        });
+                }
+            }
+        },
 
     },
     reducers: {
@@ -317,6 +390,9 @@ const Model = {
         },
         queryCart(state, action) {
             return { ...state, cart: action.payload }
+        },
+        queryStarGoods(state, action) {
+            return { ...state, starGoods: action.payload }
         },
     },
 }

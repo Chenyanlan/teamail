@@ -1,12 +1,13 @@
-import React,{Component} from 'react';
+import React, { Component } from 'react';
 import { connect } from 'dva';
-import { Avatar,Card,Col,Divider,Icon,Input,Row,Button } from 'antd';
+import { Avatar, Card, Col, Divider, Icon, Input, Row, Button } from 'antd';
 import { GridContent } from '@ant-design/pro-layout';
 import styles from './AccountCenter.less';
 import Articles from './Articles/Articles';
 import ModifyArticle from '../../../components/FormComponents/ModifyArticle';
 import Comments from './Comments/Comments';
 import Collections from './Collections/Collections';
+import Goods from './Goods/Goods';
 import { Link } from 'umi';
 
 const operationTablList = [
@@ -14,7 +15,7 @@ const operationTablList = [
         key: 'articles',
         tab: (
             <span>
-                文章
+                我的帖子
             </span>
         ),
     },
@@ -22,7 +23,15 @@ const operationTablList = [
         key: 'collection',
         tab: (
             <span>
-                收藏
+                收藏贴子
+            </span>
+        ),
+    },
+    {
+        key: 'collectiongoods',
+        tab: (
+            <span>
+                收藏商品
             </span>
         ),
     },
@@ -30,7 +39,7 @@ const operationTablList = [
         key: 'comments',
         tab: (
             <span>
-                评论
+                我的评论
             </span>
         ),
     },
@@ -128,7 +137,9 @@ class AccountCenter extends Component {
         if (tabKey === 'collection') {
             return <Collections />;
         }
-
+        if (tabKey === 'collectiongoods') {
+            return <Goods />;
+        }
         if (tabKey === 'articles') {
           return <Articles />;
         }

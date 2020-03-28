@@ -73,3 +73,20 @@ export async function addPicture(params) {
       data: params,
     });
 }
+
+export async function addStarGoods(params) {
+    return request('http://localhost:8082/demo/admin/addstargoods', {
+      method: 'POST',
+      data: params,
+    });
+}
+export async function getStarByUserGoodsId(params) {
+    return request('http://localhost:8082/demo/admin/getstarbyusergoodsid', {
+        params,
+    });
+}
+export async function changeStarGoods(params) {
+    return request('http://localhost:8082/demo/admin/changestargoods', {
+        params,
+    });
+}

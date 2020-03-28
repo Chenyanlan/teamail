@@ -1,5 +1,5 @@
 import { notification } from 'antd';
-import { queryFakeList, queryCurrent, queryArticleListByAuthorId, modifyArticle, removeArticle, addArticle, getCommentByAuthorId, removeComment, getStarArticleByUserID, removeStar } from '../services/account';
+import { queryFakeList, queryCurrent, queryArticleListByAuthorId, modifyArticle, removeArticle, addArticle, getCommentByAuthorId, removeComment, getStarArticleByUserID, removeStar, getStarGoodsByUserId, removeStarGoods } from '../services/account';
 
 const Model = {
     namespace: 'accountCenter',
@@ -9,6 +9,7 @@ const Model = {
         result: {},
         comments: {},
         starList: [],
+        starGoodsList: [],
     },
     effects: {
         *fetchCurrent({ payload }, { call, put }) {
@@ -218,11 +219,55 @@ const Model = {
                 });
             }
             const data = {
-                starUserId:localStorage.getItem('userId'),
+                starUserId: localStorage.getItem('userId'),
             }
             const response2 = yield call(getStarArticleByUserID, data);
             yield put({
                 type: 'getStarList',
+                payload: response2,
+            })
+            console.log(response2);
+        },
+        *getStarGoodsByUserId({ payload }, { call, put }) {
+            const response = yield call(getStarGoodsByUserId, payload);
+            yield put({
+                type: 'getStarGoodsList',
+                payload: response,
+            })
+            console.log(response);
+        },
+        *removeStarGoods({ payload }, { call, put }) {
+            const response = yield call(removeStarGoods, payload);
+            yield put({
+                type: 'modifyResult',
+                payload: response,
+            })
+            console.log(response);
+            if (response.success === true) {
+                notification.success({
+                    message: '成功',
+                    description:
+                        '取消收藏成功',
+                    onClick: () => {
+                        console.log('Notification Clicked!');
+                    },
+                });
+            } else {
+                notification.error({
+                    message: '失败',
+                    description:
+                    '取消收藏失败',
+                    onClick: () => {
+                    console.log('Notification Clicked!');
+                    },
+                });
+            }
+            const data = {
+                starUserId: localStorage.getItem('userId'),
+            }
+            const response2 = yield call(getStarGoodsByUserId, data);
+            yield put({
+                type: 'getStarGoodsList',
                 payload: response2,
             })
             console.log(response2);
@@ -245,6 +290,10 @@ const Model = {
         getStarList(state, action) {
             return { ...state, starList: action.payload.list }
         },
+        getStarGoodsList(state, action) {
+            return { ...state, starGoodsList: action.payload.list }
+        },
+
     },
 
 }
